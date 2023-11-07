@@ -1,0 +1,18 @@
+{
+    "recommendations": [
+        "streetsidesoftware.code-spell-checker-portuguese-brazilian",
+        "streetsidesoftware.code-spell-checker",
+        "vivaxy.vscode-conventional-commits",
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "mhutchie.git-graph",
+        "donjayamanne.githistory",
+        "wix.vscode-import-cost",
+        "davidanson.vscode-markdownlint",
+        "esbenp.prettier-vscode",
+        "yoavbls.pretty-ts-errors",
+        "prisma.prisma",
+        "antfu.retypewriter",
+        "sonarsource.sonarlint-vscode"
+    ]
+}
