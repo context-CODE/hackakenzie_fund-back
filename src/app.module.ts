@@ -3,8 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { CategoriesModule } from './categories/categories.module';
+import { CommonModule } from './common/common.module';
 @Module({
-  imports: [CategoriesModule, UsersModule],
+  imports: [CategoriesModule, UsersModule, CommonModule],
   controllers: [AppController],
   providers: [AppService],
 })
