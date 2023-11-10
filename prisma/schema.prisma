@@ -11,9 +11,33 @@ datasource db {
 }
 
 model Category {
-  id        String    @id @default(uuid())
-  name      String    @unique  @db.VarChar(20)
-  slug      String    @db.VarChar(20) 
+  id   String @id @default(uuid())
+  name String @unique @db.VarChar(20)
+  slug String @db.VarChar(20)
 
   @@map("categories")
+}
+
+model User {
+  id               String   @id @default(uuid())
+  fullName         String   @db.VarChar(50)
+  email            String   @unique @db.VarChar(70)
+  password         String   @db.VarChar(120)
+  cpf              String   @unique @db.VarChar(11)
+  phone            String   @unique 
+  birthDate        DateTime
+  type             Type     @default(CLIENT)
+  resetToken       String
+  isEmailVarified  Boolean  @default(false)
+  cofirmationToken String
+  createdAt        DateTime
+  updatedAt        DateTime
+  deletedAt        DateTime
+
+  @@map("users")
+}
+
+enum Type {
+  SELLER
+  CLIENT
 }
