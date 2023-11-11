@@ -32,7 +32,7 @@ export class CreateUserDto {
   phone: string;
 
   @IsDate()
-  birthDate: Date;
+  birthday: string;
 
   @IsString()
   type: 'SELLER' | 'CLIENT';

@@ -24,15 +24,15 @@ model User {
   email            String   @unique @db.VarChar(70)
   password         String   @db.VarChar(120)
   cpf              String   @unique @db.VarChar(11)
-  phone            String   @unique 
-  birthDate        DateTime
+  phone            String   @unique
+  birthday         String
   type             Type     @default(CLIENT)
-  resetToken       String
-  isEmailVarified  Boolean  @default(false)
-  cofirmationToken String
+  resetToken       String?
+  isEmailVerified  Boolean  @default(false)
+  confirmationToken String?   
   createdAt        DateTime
-  updatedAt        DateTime
-  deletedAt        DateTime
+  updatedAt        DateTime?
+  deletedAt        DateTime?
 
   @@map("users")
 }
