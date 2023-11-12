@@ -3,13 +3,14 @@ import { UsersRepository } from '../users.repository';
 import { PrismaService } from 'src/database/prisma.service';
 import { plainToInstance } from 'class-transformer';
 import { User } from '../../entities/user.entity';
-import { NotFoundException } from '@nestjs/common';
-
+import { Injectable, NotFoundException } from '@nestjs/common';
+@Injectable()
 export class UsersPrismaRepository implements UsersRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const user = new User();
+
     Object.assign(user, {
       ...createUserDto,
     });

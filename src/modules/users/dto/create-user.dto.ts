@@ -1,7 +1,7 @@
 import { hashSync } from 'bcrypt';
 import { Transform } from 'class-transformer';
 import {
-  IsDate,
+  // IsDate,
   IsEmail,
   IsString,
   MaxLength,
@@ -31,7 +31,7 @@ export class CreateUserDto {
   @IsString()
   phone: string;
 
-  @IsDate()
+  @IsString()
   birthday: string;
 
   @IsString()
