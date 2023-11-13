@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './repository/users.repository';
@@ -22,26 +18,14 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    const findUser = await this.userRepository.findOne(id);
-
-    if (!findUser) throw new NotFoundException('User not found');
-
     return this.userRepository.findOne(id);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const findUser = await this.userRepository.findOne(id);
-
-    if (!findUser) throw new NotFoundException('User not found');
-
     return await this.userRepository.update(id, updateUserDto);
   }
 
   async delete(id: string) {
-    const findUser = await this.userRepository.findOne(id);
-
-    if (!findUser) throw new NotFoundException('User not found');
-
-    this.userRepository.delete(id);
+    await this.userRepository.delete(id);
   }
 }
