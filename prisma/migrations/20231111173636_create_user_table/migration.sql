@@ -2,15 +2,6 @@
 CREATE TYPE "Type" AS ENUM ('SELLER', 'CLIENT');
 
 -- CreateTable
-CREATE TABLE "categories" (
-    "id" TEXT NOT NULL,
-    "name" VARCHAR(20) NOT NULL,
-    "slug" VARCHAR(20) NOT NULL,
-
-    CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "fullName" VARCHAR(50) NOT NULL,
@@ -29,9 +20,6 @@ CREATE TABLE "users" (
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "categories_name_key" ON "categories"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
