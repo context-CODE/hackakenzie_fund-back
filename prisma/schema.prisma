@@ -30,8 +30,8 @@ model User {
   resetToken        String?
   isEmailVerified   Boolean   @default(false)
   confirmationToken String?
-  createdAt         DateTime  @default(now()) 
-  updatedAt         DateTime?  @updatedAt()
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime? @updatedAt()
   deletedAt         DateTime?
 
   @@map("users")
