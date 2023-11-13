@@ -81,10 +81,6 @@ export class ImagesService {
     }
   }
 
-  findAll() {
-    return `This action returns all images`;
-  }
-
   async findOne(id: string) {
     const image = await this.imagesRepository.findOne(id);
 

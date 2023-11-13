@@ -2,11 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Image } from '../../entities/image.entity';
 import { PrismaService } from 'src/database/prisma.service';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { ImagesRepository } from '../images.repository';
 import { CreateImageDto } from '../../dto/create-image.dto';
 import { UpdateImageDto } from '../../dto/update-image.dto';
-import { DEFAULT_PAGINATION_SIZE } from 'src/common/util/common.constants';
 
 @Injectable()
 export class ImagesPrismaRepository implements ImagesRepository {
@@ -42,17 +40,6 @@ export class ImagesPrismaRepository implements ImagesRepository {
     });
 
     return plainToInstance(Image, newImages);
-  }
-
-  async findAll(paginationDto: PaginationDto): Promise<Image[]> {
-    const { limit, offset } = paginationDto;
-
-    const images = await this.prisma.image.findMany({
-      skip: offset,
-      take: limit ?? DEFAULT_PAGINATION_SIZE.IMAGES,
-    });
-
-    return plainToInstance(Image, images);
   }
 
   async findOne(id: string): Promise<Image> {

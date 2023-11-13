@@ -39,11 +39,6 @@ export class ImagesController {
     return this.imagesService.createMany(files, data);
   }
 
-  @Get()
-  findAll() {
-    return this.imagesService.findAll();
-  }
-
   @Get(':id')
   findOne(@Param() { id }: IdDto) {
     return this.imagesService.findOne(id);

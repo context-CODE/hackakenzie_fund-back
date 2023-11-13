@@ -49,7 +49,6 @@ export class UsersPrismaRepository implements UsersRepository {
         },
         data: {
           ...updateUserDto,
-          updatedAt: new Date(),
         },
       });
       return plainToInstance(User, updateUser);
