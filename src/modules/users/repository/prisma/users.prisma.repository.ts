@@ -13,6 +13,7 @@ export class UsersPrismaRepository implements UsersRepository {
 
     Object.assign(user, {
       ...createUserDto,
+      createdAt: new Date(),
     });
 
     const newUser = await this.prisma.user.create({
@@ -48,6 +49,7 @@ export class UsersPrismaRepository implements UsersRepository {
         },
         data: {
           ...updateUserDto,
+          updatedAt: new Date(),
         },
       });
       return plainToInstance(User, updateUser);
@@ -56,10 +58,14 @@ export class UsersPrismaRepository implements UsersRepository {
     }
   }
   async delete(id: string): Promise<void> {
-    await this.prisma.user.delete({
-      where: {
-        id,
-      },
-    });
+    try {
+      await this.prisma.user.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      throw new NotFoundException('User not found');
+    }
   }
 }
