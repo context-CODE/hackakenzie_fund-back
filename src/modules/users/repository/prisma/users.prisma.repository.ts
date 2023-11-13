@@ -13,6 +13,7 @@ export class UsersPrismaRepository implements UsersRepository {
 
     Object.assign(user, {
       ...createUserDto,
+      createdAt: new Date(),
     });
 
     const newUser = await this.prisma.user.create({
@@ -48,6 +49,7 @@ export class UsersPrismaRepository implements UsersRepository {
         },
         data: {
           ...updateUserDto,
+          updatedAt: new Date(),
         },
       });
       return plainToInstance(User, updateUser);
