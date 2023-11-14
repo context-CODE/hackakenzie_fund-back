@@ -1,12 +1,6 @@
 import { hashSync } from 'bcrypt';
 import { Transform } from 'class-transformer';
-import {
-  // IsDate,
-  IsEmail,
-  IsString,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()

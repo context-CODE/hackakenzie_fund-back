@@ -24,12 +24,10 @@ export class ImagesPrismaRepository implements ImagesRepository {
   }
 
   async createMany(data: CreateImageDto[]): Promise<Image[]> {
-    const images = new Array(data.length).fill({});
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const newImages = images.map((img) => new Image());
+    const newImages = new Array(data.length).fill({});
 
     data.forEach((img, index) => {
+      newImages[index] = new Image();
       Object.assign(newImages[index], {
         ...img,
       });
