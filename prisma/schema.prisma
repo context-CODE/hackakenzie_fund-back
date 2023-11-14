@@ -33,6 +33,7 @@ model User {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt()
   deletedAt         DateTime?
+  address Address? 
 
   @@map("users")
 }
@@ -50,4 +51,22 @@ model Image {
   cloudinaryId String  @unique() @db.VarChar(16)
 
   @@map("images")
+}
+
+model Address {
+  id           String  @id @default(uuid())
+  responsible  String @db.Char(90)
+  district     String @db.Char(50)
+  zipCode      String @db.Char(8)
+  street       String @db.Char(50)
+  city         String @db.Char(50)
+  state        String @db.Char(2)
+  number       String @db.Char(5)
+  complement   String @db.Char(20)
+  reference    String @db.Char(30)
+  isDefault    Boolean  @default(false)
+  user   User    @relation(fields: [userId], references: [id])
+  userId String     @unique
+
+  @@map("address")
 }
