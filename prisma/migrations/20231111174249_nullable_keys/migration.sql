@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "users" ALTER COLUMN "resetToken" DROP NOT NULL,
+ALTER COLUMN "confirmationToken" DROP NOT NULL,
+ALTER COLUMN "updatedAt" DROP NOT NULL,
+ALTER COLUMN "deletedAt" DROP NOT NULL;

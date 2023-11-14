@@ -10,5 +10,15 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "cSpell.language": "en,pt-BR",
-  "cSpell.words": ["nestjs"]
+  "cSpell.words": [
+    "nestjs",
+    "cloudinary",
+    "Cloudinary",
+    "ecom",
+    "ECOM",
+    "nestjs",
+    "originalname",
+    "streamifier"
+  ],
+  
 }
