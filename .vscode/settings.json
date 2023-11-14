@@ -11,17 +11,14 @@
   "editor.guides.bracketPairs": "active",
   "cSpell.language": "en,pt-BR",
   "cSpell.words": [
-    "nestjs"
+    "nestjs",
+    "cloudinary",
+    "Cloudinary",
+    "ecom",
+    "ECOM",
+    "nestjs",
+    "originalname",
+    "streamifier"
   ],
-  "sqltools.connections": [
-    {
-      "previewLimit": 50,
-      "server": "localhost",
-      "port": 5432,
-      "driver": "PostgreSQL",
-      "name": "vinicius",
-      "database": "hackakenzie",
-      "username": "vinicius"
-    }
-  ]
+  
 }
