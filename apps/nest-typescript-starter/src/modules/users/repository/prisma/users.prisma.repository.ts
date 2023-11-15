@@ -4,7 +4,6 @@ import { PrismaService } from 'src/database/prisma.service';
 import { plainToInstance } from 'class-transformer';
 import { User } from '../../entities/user.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
-
 @Injectable()
 export class UsersPrismaRepository implements UsersRepository {
   constructor(private prisma: PrismaService) {}
@@ -29,11 +28,7 @@ export class UsersPrismaRepository implements UsersRepository {
         where: {
           id,
         },
-        include: {
-          address: true,
-        },
       });
-
       return findUser;
     } catch (error) {
       throw new NotFoundException('User not found');
