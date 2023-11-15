@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { ImagesModule } from './modules/images/images.module';
 import { AddressModule } from './modules/address/address.module';
+import { ShipmentsModule } from './modules/shipments/shipments.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { AddressModule } from './modules/address/address.module';
     ConfigModule.forRoot({ isGlobal: true }),
     ImagesModule,
     AddressModule,
+    ShipmentsModule,
   ],
   exports: [],
   controllers: [AppController],

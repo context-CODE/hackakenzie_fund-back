@@ -12,5 +12,5 @@ export abstract class AddressRepository {
     updateAddressDto: UpdateAddressDto,
   ): Promise<Address>;
   abstract delete(id: string): Promise<void>;
-  abstract findOne(addressId: string): Promise<void>;
+  abstract findOne(addressId: string): Promise<Address>;
 }

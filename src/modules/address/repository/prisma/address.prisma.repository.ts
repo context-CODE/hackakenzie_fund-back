@@ -20,9 +20,7 @@ export class AddressPrismaRepository implements AddressRepository {
       throw new Error('Dados inválidos');
     }
     const address = new Address();
-    console.log('dto', createAddressDto);
     Object.assign(address, { ...createAddressDto });
-    console.log('address', address);
 
     const newAddress: Address = await this.prisma.address.create({
       data: { ...address, userId },
@@ -56,7 +54,7 @@ export class AddressPrismaRepository implements AddressRepository {
     });
   }
 
-  async findOne(addressId: string): Promise<void> {
+  async findOne(addressId: string): Promise<Address> {
     const address = await this.prisma.address.findUnique({
       where: {
         id: addressId,
@@ -66,5 +64,7 @@ export class AddressPrismaRepository implements AddressRepository {
     if (!address) {
       throw new NotFoundException('address not found!');
     }
+
+    return address;
   }
 }
