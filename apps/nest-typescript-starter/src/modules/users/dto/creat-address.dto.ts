@@ -1,6 +1,10 @@
-import { hashSync } from 'bcrypt';
-import { Transform } from 'class-transformer';
-import { IsBoolean, IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class CreateAddressDto {
   @IsString()
@@ -31,22 +35,20 @@ export class CreateAddressDto {
 
   @IsString()
   @MaxLength(5)
-  number:string;
+  number: string;
 
   @IsString()
   @MaxLength(20)
-  complement:string;
+  complement: string;
 
   @IsString()
   @MaxLength(30)
-  reference:string;
+  reference: string;
 
   @IsBoolean()
   isDefault: boolean;
 
   @IsString()
   @IsNotEmpty()
-  userId:string;
-
-  
+  userId: string;
 }
