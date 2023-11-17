@@ -7,6 +7,6 @@ export class CreateImageDto {
   title: string;
 
   @IsOptional()
-  @Transform(({ value }) => (/true/.test(`${value}`) ? true : false))
+  @Transform(({ value }) => !!/true/.test(`${value}`))
   isCover: boolean;
 }

@@ -7,6 +7,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { ConfigModule } from '@nestjs/config';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { ImagesModule } from './modules/images/images.module';
+import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
@@ -17,6 +18,7 @@ import { AuthModule } from './modules/auth/auth.module';
     CloudinaryModule,
     ConfigModule.forRoot({ isGlobal: true }),
     ImagesModule,
+    ProductsModule,
     AuthModule,
   ],
   controllers: [AppController],

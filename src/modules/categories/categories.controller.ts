@@ -7,6 +7,7 @@ import {
   Query,
   Delete,
   Controller,
+  HttpCode,
 } from '@nestjs/common';
 import { IdDto } from 'src/common/dto/id.dto';
 import { CategoriesService } from './categories.service';
@@ -39,6 +40,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param() { id }: IdDto) {
     return this.categoriesService.remove(id);
   }
