@@ -8,6 +8,7 @@ import { ImagesPrismaRepository } from './repositories/prisma/images-prisma.repo
 
 @Module({
   imports: [CloudinaryModule],
+  exports: [ImagesService],
   controllers: [ImagesController],
   providers: [
     ImagesService,
