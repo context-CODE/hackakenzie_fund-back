@@ -10,7 +10,6 @@ import { ImagesModule } from './modules/images/images.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
 
-
 @Module({
   imports: [
     CommonModule,
@@ -21,7 +20,6 @@ import { AuthModule } from './modules/auth/auth.module';
     ImagesModule,
     ProductsModule,
     AuthModule,
-
   ],
   controllers: [AppController],
   providers: [AppService],
