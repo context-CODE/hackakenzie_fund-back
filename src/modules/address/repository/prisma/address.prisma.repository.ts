@@ -20,14 +20,11 @@ export class AddressPrismaRepository implements AddressRepository {
       throw new Error('Dados inválidos');
     }
     const address = new Address();
-    console.log('dto', createAddressDto);
     Object.assign(address, { ...createAddressDto });
-    console.log('address', address);
 
     const newAddress: Address = await this.prisma.address.create({
       data: { ...address, userId },
     });
-    console.log('newAddress', newAddress);
 
     return plainToInstance(Address, newAddress);
   }
