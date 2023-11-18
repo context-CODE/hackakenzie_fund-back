@@ -6,16 +6,20 @@ import {
   Param,
   Delete,
   Controller,
+  UploadedFile,
   UploadedFiles,
   UseInterceptors,
-  UploadedFile,
+  HttpCode,
 } from '@nestjs/common';
 import { IdDto } from 'src/common/dto/id.dto';
 import { ImagesService } from './images.service';
-import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import { imageOptions } from './helpers/file-filter.helper';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import {
+  RequestOneImageDto,
+  RequestMultiImagesDto,
+} from './dto/request-image.dto';
 
 @Controller('images')
 export class ImagesController {
@@ -25,18 +29,29 @@ export class ImagesController {
   @UseInterceptors(FileInterceptor('image', imageOptions))
   createOne(
     @UploadedFile() file: Express.Multer.File,
-    @Body() data: CreateImageDto,
+    @Body() { data }: { data: string },
   ) {
-    return this.imagesService.createOne(file, data);
+    const imageData: RequestOneImageDto = JSON.parse(data);
+
+    return this.imagesService.createOne(
+      file,
+      imageData.image,
+      imageData.product,
+    );
   }
 
   @Post('uploads')
   @UseInterceptors(FilesInterceptor('images', 5, imageOptions))
   createMany(
     @UploadedFiles() files: Array<Express.Multer.File>,
-    @Body() { data }: { data: CreateImageDto[] },
+    @Body() { data }: { data: string },
   ) {
-    return this.imagesService.createMany(files, data);
+    const imagesData: RequestMultiImagesDto = JSON.parse(data);
+    return this.imagesService.createMany(
+      files,
+      imagesData.images,
+      imagesData.product,
+    );
   }
 
   @Get(':id')
@@ -50,6 +65,7 @@ export class ImagesController {
   }
 
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param() { id }: IdDto) {
     return this.imagesService.remove(id);
   }

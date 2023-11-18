@@ -1,4 +1,4 @@
-import { hashSync } from 'bcrypt';
+import { hashSync } from 'bcryptjs';
 import { Transform } from 'class-transformer';
 import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 

@@ -24,7 +24,7 @@ export class CategoriesPrismaRepository implements CategoriesRepository {
     return plainToInstance(Category, newCategory);
   }
 
-  async findByName(name: string): Promise<Category> {
+  async findByName(name: string): Promise<Category | null> {
     const category = await this.prisma.category.findFirst({
       where: {
         name: {
@@ -48,7 +48,7 @@ export class CategoriesPrismaRepository implements CategoriesRepository {
     return plainToInstance(Category, categories);
   }
 
-  async findOne(id: string): Promise<Category> {
+  async findOne(id: string): Promise<Category | null> {
     const category = await this.prisma.category.findUnique({
       where: { id },
     });
