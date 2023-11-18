@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { randomBytes } from 'crypto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateImageDto } from './dto/create-image.dto';
@@ -7,6 +8,7 @@ import { ImagesRepository } from './repositories/images.repository';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { CLOUDINARY_FOLDERS } from '../cloudinary/utils/cloudinary-constants';
 import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
+import { IdDto } from 'src/common/dto/id.dto';
 
 @Injectable()
 export class ImagesService {
@@ -17,6 +19,7 @@ export class ImagesService {
   async createOne(
     file: Express.Multer.File,
     { title, isCover }: CreateImageDto,
+    product: IdDto,
   ) {
     try {
       const filename = file.originalname.split('.')[0];
@@ -27,7 +30,7 @@ export class ImagesService {
           file,
           cloudinaryId,
           filename,
-          CLOUDINARY_FOLDERS.SAMPLES,
+          CLOUDINARY_FOLDERS.PRODUCTS,
         ),
       );
 
@@ -36,31 +39,34 @@ export class ImagesService {
         isCover,
         cloudinaryId,
         path: secure_url,
+        productId: product.id,
       };
 
       const image = await Promise.resolve(promise);
 
-      return this.imagesRepository.createOne(image);
+      return this.imagesRepository.createOne(image, product.id);
     } catch (error) {
       return new ExceptionsHandler(error);
     }
   }
 
-  async createMany(files: Array<Express.Multer.File>, data: CreateImageDto[]) {
+  async createMany(
+    files: Array<Express.Multer.File>,
+    data: CreateImageDto[],
+    product: IdDto,
+  ) {
     try {
       const promises = files.map(async (file, index) => {
         const filename = file.originalname.split('.')[0];
         const cloudinaryId = randomBytes(8).toString('hex');
-        const isCoverValid = /true/.test(`${data[index].isCover}`)
-          ? true
-          : false;
+        const isCoverValid = !!/true/.test(`${data[index].isCover}`);
 
         const { secure_url } = await Promise.resolve(
           this.cloudinaryService.uploadFile(
             file,
             cloudinaryId,
             filename,
-            CLOUDINARY_FOLDERS.SAMPLES,
+            CLOUDINARY_FOLDERS.PRODUCTS,
           ),
         );
 
@@ -74,7 +80,7 @@ export class ImagesService {
 
       const images = await Promise.all(promises);
 
-      return this.imagesRepository.createMany(images);
+      return this.imagesRepository.createMany(images, product.id);
     } catch (error) {
       console.log(error);
       return new ExceptionsHandler(error);

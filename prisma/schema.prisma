@@ -11,9 +11,10 @@ datasource db {
 }
 
 model Category {
-  id   String @id @default(uuid())
-  name String @unique @db.VarChar(20)
-  slug String @db.Text()
+  id      String    @id @default(uuid())
+  name    String    @unique @db.VarChar(20)
+  slug    String    @db.Text
+  Product Product[]
 
   @@map("categories")
 }
@@ -31,9 +32,9 @@ model User {
   isEmailVerified   Boolean   @default(false)
   confirmationToken String?
   createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt()
+  updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
-  address Address[] 
+  address           Address[]
 
   @@map("users")
 }
@@ -45,31 +46,33 @@ enum Type {
 
 model Image {
   id           String  @id @default(uuid())
-  title        String  @db.Text()
+  title        String  @db.Text
   isCover      Boolean @default(false)
-  path         String  @db.Text()
-  cloudinaryId String  @unique() @db.VarChar(16)
+  path         String  @db.Text
+  cloudinaryId String  @unique @db.VarChar(16)
+  Product      Product @relation(fields: [productId], references: [id])
+  productId    String
 
   @@map("images")
 }
 
 model Address {
- id          String @id @default(uuid())
- responsible String @db.VarChar(90)
- district    String @db.VarChar(50)
- zipCode     String @db.Char(8)
- street      String @db.VarChar(50)
- city        String @db.VarChar(50)
- state       String @db.Char(2)
- number      String @db.VarChar(5) @default("")
- complement  String @db.VarChar(20) @default("")
- reference   String @db.VarChar(30)
- isDefault   Boolean @default(false)
- user  User   @relation(fields: [userId], references: [id])
- userId String
- shipments Shipments[]
+  id          String      @id @default(uuid())
+  responsible String      @db.VarChar(90)
+  district    String      @db.VarChar(50)
+  zipCode     String      @db.Char(8)
+  street      String      @db.VarChar(50)
+  city        String      @db.VarChar(50)
+  state       String      @db.Char(2)
+  number      String      @default("") @db.VarChar(5)
+  complement  String      @default("") @db.VarChar(20)
+  reference   String      @db.VarChar(30)
+  isDefault   Boolean     @default(false)
+  user        User        @relation(fields: [userId], references: [id])
+  userId      String
+  shipments   Shipments[]
 
- @@map("address")
+  @@map("address")
 }
 
 enum Role {
@@ -78,14 +81,33 @@ enum Role {
 }
 
 model Shipments {
-  id String @id @default(uuid())
-  fee  Float @db.DoublePrecision()
-  trackCode String? @db.VarChar()
-  shippedAt DateTime? @default(now())
+  id             String    @id @default(uuid())
+  fee            Float     @db.DoublePrecision()
+  trackCode      String?   @db.VarChar()
+  shippedAt      DateTime? @default(now())
   deliveredUntil DateTime
-  option Role @default(standard)
-  address Address @relation(fields: [addressId], references: [id])
-  addressId String
+  option         Role      @default(standard)
+  address        Address   @relation(fields: [addressId], references: [id])
+  addressId      String
 
   @@map("shipments")
+}
+
+model Product {
+  id             String    @id @default(uuid())
+  name           String    @unique @db.VarChar(120)
+  slug           String    @db.Text
+  price          Float     @db.DoublePrecision
+  description    String    @db.Text
+  color          String    @db.VarChar(50)
+  sku            String    @unique @db.VarChar(11)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+  specifications Json      @db.JsonB()
+  category       Category  @relation(fields: [categoryId], references: [id])
+  categoryId     String
+  images         Image[]
+
+  @@map("products")
 }

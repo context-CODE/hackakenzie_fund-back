@@ -5,7 +5,6 @@ export const VALIDATION_PIPE_OPTIONS: ValidationPipeOptions = {
   transform: true,
   transformOptions: {
     groups: ['transform'],
-    // enableImplicitConversion: true,
   },
 };
 

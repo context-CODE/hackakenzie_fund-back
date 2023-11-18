@@ -9,17 +9,21 @@ import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { ImagesModule } from './modules/images/images.module';
 import { AddressModule } from './modules/address/address.module';
 import { ShipmentsModule } from './modules/shipments/shipments.module';
+import { ProductsModule } from './modules/products/products.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     CommonModule,
     CategoriesModule,
     UsersModule,
     CloudinaryModule,
-    ConfigModule.forRoot({ isGlobal: true }),
     ImagesModule,
     AddressModule,
     ShipmentsModule,
+    ProductsModule,
+    AuthModule,
   ],
   exports: [],
   controllers: [AppController],
