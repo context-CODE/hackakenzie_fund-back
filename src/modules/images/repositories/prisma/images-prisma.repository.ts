@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Image } from '../../entities/image.entity';
-import { PrismaService } from 'src/database/prisma.service';
 import { ImagesRepository } from '../images.repository';
+import { PrismaService } from 'src/database/prisma.service';
 import { CreateImageDto } from '../../dto/create-image.dto';
 import { UpdateImageDto } from '../../dto/update-image.dto';
 
 @Injectable()
 export class ImagesPrismaRepository implements ImagesRepository {
   constructor(private prisma: PrismaService) {}
-  async createOne(data: CreateImageDto): Promise<Image> {
+  async createOne(data: CreateImageDto, productId: string): Promise<Image> {
     const image = new Image();
 
     Object.assign(image, {
@@ -17,19 +17,27 @@ export class ImagesPrismaRepository implements ImagesRepository {
     });
 
     const newImage = await this.prisma.image.create({
-      data: { ...image },
+      data: {
+        ...image,
+        productId,
+      },
     });
 
     return plainToInstance(Image, newImage);
   }
 
-  async createMany(data: CreateImageDto[]): Promise<Image[]> {
+  async createMany(
+    data: CreateImageDto[],
+    productId: string,
+  ): Promise<Image[]> {
     const newImages = new Array(data.length).fill({});
 
     data.forEach((img, index) => {
       newImages[index] = new Image();
+
       Object.assign(newImages[index], {
         ...img,
+        productId,
       });
     });
 
