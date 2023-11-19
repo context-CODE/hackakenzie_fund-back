@@ -9,6 +9,7 @@ import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { ImagesModule } from './modules/images/images.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { StockModule } from './modules/stock/stock.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AuthModule } from './modules/auth/auth.module';
     ImagesModule,
     ProductsModule,
     AuthModule,
+    StockModule,
   ],
   controllers: [AppController],
   providers: [AppService],
