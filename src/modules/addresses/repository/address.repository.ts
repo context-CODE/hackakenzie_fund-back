@@ -1,6 +1,6 @@
-import { Address } from '@prisma/client';
 import { CreateAddressDto } from '../dto/create-address.dto';
 import { UpdateAddressDto } from '../dto/update-address.dto';
+import { Address } from '../entities/address.entity';
 
 export abstract class AddressRepository {
   abstract create(

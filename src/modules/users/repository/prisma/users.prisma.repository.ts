@@ -34,9 +34,11 @@ export class UsersPrismaRepository implements UsersRepository {
         },
       });
 
+      if (!findUser) throw new NotFoundException('user not found!');
+
       return findUser;
     } catch (error) {
-      throw new NotFoundException('User not found');
+      return error.response;
     }
   }
   async findByEmail(email: string): Promise<User> {
