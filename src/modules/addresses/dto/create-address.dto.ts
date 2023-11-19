@@ -2,23 +2,21 @@ import {
   IsBoolean,
   IsOptional,
   IsString,
+  Length,
   MaxLength,
-  MinLength,
 } from 'class-validator';
 
 export class CreateAddressDto {
   @IsString()
-  @MaxLength(90)
-  @MinLength(3)
+  @Length(3, 90)
   responsible: string;
 
   @IsString()
-  @MaxLength(50)
-  @MinLength(3)
+  @Length(3, 50)
   district: string;
 
   @IsString()
-  @MaxLength(8)
+  @Length(8, 8)
   zipCode: string;
 
   @IsString()
@@ -30,7 +28,7 @@ export class CreateAddressDto {
   city: string;
 
   @IsString()
-  @MaxLength(2)
+  @Length(2, 2)
   state: string;
 
   @IsString()

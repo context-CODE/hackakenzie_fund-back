@@ -1,4 +1,4 @@
-import { CreateAddressDto } from 'src/modules/address/dto/create-address.dto';
+import { CreateAddressDto } from 'src/modules/addresses/dto/create-address.dto';
 import { AddressRepository } from '../address.repository';
 import { PrismaService } from 'src/database/prisma.service';
 import { plainToInstance } from 'class-transformer';

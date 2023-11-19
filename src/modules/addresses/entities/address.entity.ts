@@ -10,12 +10,11 @@ export class Address {
   city: string;
   state: string;
   number: string;
-  complement: string; // Adicione o '?' para indicar que é opcional.
-  reference: string; // Adicione o '?' para indicar que é opcional.
+  complement?: string | null;
+  reference?: string | null;
   isDefault: boolean;
 
-  // Relacionamento com o modelo User
-  userId: string;
+  readonly userId: string;
 
   constructor() {
     this.id = randomUUID();
