@@ -11,9 +11,10 @@ datasource db {
 }
 
 model Category {
-  id   String @id @default(uuid())
-  name String @unique @db.VarChar(20)
-  slug String @db.Text()
+  id      String    @id @default(uuid())
+  name    String    @unique @db.VarChar(20)
+  slug    String    @db.Text
+  Product Product[]
 
   @@map("categories")
 }
@@ -33,22 +34,44 @@ model User {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt()
   deletedAt         DateTime?
-  address Address[] 
+  address Address[]
+  wishlists Wishlists?
+  
 
   @@map("users")
+}
+
+model Product {
+  id             String    @id @default(uuid())
+  name           String    @unique @db.VarChar(120)
+  slug           String    @db.Text
+  price          Float     @db.DoublePrecision
+  description    String    @db.Text
+  color          String    @db.VarChar(50)
+  sku            String    @unique @db.VarChar(11)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+  specifications Json      @db.JsonB()
+  category       Category  @relation(fields: [categoryId], references: [id])
+  categoryId     String
+  images         Image[]
+
+  @@map("products")
 }
 
 enum Type {
   SELLER
   CLIENT
 }
-
 model Image {
   id           String  @id @default(uuid())
-  title        String  @db.Text()
+  title        String  @db.Text
   isCover      Boolean @default(false)
-  path         String  @db.Text()
-  cloudinaryId String  @unique() @db.VarChar(16)
+  path         String  @db.Text
+  cloudinaryId String  @unique @db.VarChar(16)
+  Product      Product @relation(fields: [productId], references: [id])
+  productId    String
 
   @@map("images")
 }
@@ -69,4 +92,13 @@ model Address {
  userId String
 
  @@map("addreses")
+}
+
+model Wishlists {
+  id          String @id @default(uuid())
+  addAt DateTime  @default(now())
+  user  User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  @@map("wishlisted")
 }
