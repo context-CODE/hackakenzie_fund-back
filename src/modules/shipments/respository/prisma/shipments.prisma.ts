@@ -4,6 +4,7 @@ import { UpdateShipmentDto } from '../../dto/update-shipment.dto';
 import { Shipment } from '../../entities/shipment.entity';
 import { ShipmentsRepository } from '../shipments.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class ShipmentPrismaRepository implements ShipmentsRepository {
@@ -29,7 +30,7 @@ export class ShipmentPrismaRepository implements ShipmentsRepository {
       data: { ...shipments, addressId: address.id },
     });
 
-    return newShipment;
+    return plainToInstance(Shipment, newShipment);
   }
 
   async delete(shipmentId: string): Promise<void> {
@@ -53,7 +54,7 @@ export class ShipmentPrismaRepository implements ShipmentsRepository {
       data: { ...updateShipmentsDto },
     });
 
-    return newShipment;
+    return plainToInstance(Shipment, newShipment);
   }
 
   async findAll(addressId?: string): Promise<Shipment[]> {
@@ -62,12 +63,12 @@ export class ShipmentPrismaRepository implements ShipmentsRepository {
         where: { addressId },
       });
 
-      return shipments;
+      return plainToInstance(Shipment, shipments);
     }
 
     const shipments = await this.prisma.shipments.findMany({});
 
-    return shipments;
+    return plainToInstance(Shipment, shipments);
   }
 
   async findOne(shipmentId: string): Promise<Shipment> {
@@ -79,6 +80,6 @@ export class ShipmentPrismaRepository implements ShipmentsRepository {
       throw new NotFoundException('shipment not found!');
     }
 
-    return shipment;
+    return plainToInstance(Shipment, shipment);
   }
 }

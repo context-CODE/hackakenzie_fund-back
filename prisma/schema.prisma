@@ -82,9 +82,9 @@ enum Role {
 
 model Shipments {
   id             String    @id @default(uuid())
-  fee            Float     @db.DoublePrecision()
-  trackCode      String?   @db.VarChar()
-  shippedAt      DateTime? @default(now())
+  fee            Float     @db.DoublePrecision
+  trackCode      String?   @db.Text
+  shippedAt      DateTime?
   deliveredUntil DateTime
   option         Role      @default(standard)
   address        Address   @relation(fields: [addressId], references: [id])

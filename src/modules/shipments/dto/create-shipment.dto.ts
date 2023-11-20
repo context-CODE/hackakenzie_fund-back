@@ -1,15 +1,22 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsDateString, IsOptional, IsString } from 'class-validator';
+import { IsCurrency } from 'src/common/decorators/isCurrency.decorator';
 
 export class CreateShipmentDto {
-  @IsNumber()
+  @IsCurrency()
   fee: GLfloat;
 
+  @IsOptional()
   @IsString()
   option: 'standard' | 'fast';
 
+  @IsOptional()
   @IsString()
   trackCode: string;
 
-  @IsString()
+  @IsOptional()
+  @IsDateString({ strict: true, strictSeparator: true })
+  shippedAt: Date;
+
+  @IsDateString({ strict: true, strictSeparator: true })
   deliveredUntil: Date;
 }

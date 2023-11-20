@@ -5,31 +5,24 @@ import { ShipmentsRepository } from './respository/shipments.repository';
 
 @Injectable()
 export class ShipmentsService {
-  constructor(readonly shipmentsService: ShipmentsRepository) {}
+  constructor(readonly shipmentsRepository: ShipmentsRepository) {}
   create(addressId: string, createShipmentDto: CreateShipmentDto) {
-    return this.shipmentsService.create(addressId, createShipmentDto);
+    return this.shipmentsRepository.create(addressId, createShipmentDto);
   }
 
-  findAll(addressId?: string, shipmentId?: string) {
-    if (addressId) {
-      return this.shipmentsService.findAll(addressId);
-    }
-    if (shipmentId) {
-      return this.findOne(shipmentId);
-    }
-
-    return this.shipmentsService.findAll(shipmentId);
+  findAll(addressId: string) {
+    return this.shipmentsRepository.findAll(addressId);
   }
 
   findOne(shipmentId: string) {
-    return this.shipmentsService.findOne(shipmentId);
+    return this.shipmentsRepository.findOne(shipmentId);
   }
 
   update(shipmentId: string, updateShipmentDto: UpdateShipmentDto) {
-    return this.shipmentsService.update(shipmentId, updateShipmentDto);
+    return this.shipmentsRepository.update(shipmentId, updateShipmentDto);
   }
 
   remove(shipmentId: string) {
-    return this.shipmentsService.delete(shipmentId);
+    return this.shipmentsRepository.delete(shipmentId);
   }
 }

@@ -1,4 +1,6 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { OmitType, PartialType } from '@nestjs/mapped-types';
 import { CreateShipmentDto } from './create-shipment.dto';
 
-export class UpdateShipmentDto extends PartialType(CreateShipmentDto) {}
+export class UpdateShipmentDto extends PartialType(
+  OmitType(CreateShipmentDto, ['fee', 'option']),
+) {}

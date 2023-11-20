@@ -64,6 +64,6 @@ export class AddressPrismaRepository implements AddressRepository {
       throw new NotFoundException('address not found!');
     }
 
-    return address;
+    return plainToInstance(Address, address);
   }
 }

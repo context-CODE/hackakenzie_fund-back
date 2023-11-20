@@ -25,9 +25,8 @@ export class ShipmentsController {
   }
 
   @Get()
-  findAll(@Query() query: { addressId?: string; shipmentId?: string }) {
-    console.log(query);
-    return this.shipmentsService.findAll(query.addressId, query.shipmentId);
+  findAll(@Query(':addressId') addressId: string) {
+    return this.shipmentsService.findAll(addressId);
   }
 
   @Patch(':shipmentId')
