@@ -11,6 +11,7 @@ import { AddressModule } from './modules/addresses/address.module';
 import { ShipmentsModule } from './modules/shipments/shipments.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { StockModule } from './modules/stock/stock.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthModule } from './modules/auth/auth.module';
     ShipmentsModule,
     ProductsModule,
     AuthModule,
+    StockModule,
   ],
   exports: [],
   controllers: [AppController],

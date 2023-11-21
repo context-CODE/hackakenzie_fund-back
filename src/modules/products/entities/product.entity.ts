@@ -1,5 +1,5 @@
-import { JsonValue } from '@prisma/client/runtime/library';
 import { randomUUID } from 'crypto';
+import { JsonValue } from '@prisma/client/runtime/library';
 import { Category } from 'src/modules/categories/entities/category.entity';
 
 export class Product {
