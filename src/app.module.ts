@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { ImagesModule } from './modules/images/images.module';
 import { AddressModule } from './modules/addresses/address.module';
+import { ShipmentsModule } from './modules/shipments/shipments.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { StockModule } from './modules/stock/stock.module';
@@ -21,6 +22,7 @@ import { StockModule } from './modules/stock/stock.module';
     CloudinaryModule,
     ImagesModule,
     AddressModule,
+    ShipmentsModule,
     ProductsModule,
     AuthModule,
     StockModule,
