@@ -53,7 +53,7 @@ export class AddressPrismaRepository implements AddressRepository {
     });
   }
 
-  async findOne(addressId: string): Promise<void> {
+  async findOne(addressId: string): Promise<Address> {
     const address = await this.prisma.address.findUnique({
       where: {
         id: addressId,
@@ -63,5 +63,7 @@ export class AddressPrismaRepository implements AddressRepository {
     if (!address) {
       throw new NotFoundException('address not found!');
     }
+
+    return plainToInstance(Address, address);
   }
 }
