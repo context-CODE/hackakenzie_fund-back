@@ -1,4 +1,4 @@
-import { IsNotEmptyString } from '../decorators/isNoEmptyString.decorator';
+import { IsNotEmptyString } from '../decorators/is-not-empty-string.decorator';
 
 export class MessageDto {
   @IsNotEmptyString()

@@ -9,17 +9,19 @@ import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { ImagesModule } from './modules/images/images.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { MailServerModule } from './modules/mail-server/mail-server.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     CommonModule,
     CategoriesModule,
     UsersModule,
     CloudinaryModule,
-    ConfigModule.forRoot({ isGlobal: true }),
     ImagesModule,
     ProductsModule,
     AuthModule,
+    MailServerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
