@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ImagesService } from '../images/images.service';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { RequestProductDto } from './dto/request-product.dto';
