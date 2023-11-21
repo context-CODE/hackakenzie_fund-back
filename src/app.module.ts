@@ -7,22 +7,25 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { ConfigModule } from '@nestjs/config';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { ImagesModule } from './modules/images/images.module';
+import { AddressModule } from './modules/addresses/address.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { StockModule } from './modules/stock/stock.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     CommonModule,
     CategoriesModule,
     UsersModule,
     CloudinaryModule,
-    ConfigModule.forRoot({ isGlobal: true }),
     ImagesModule,
+    AddressModule,
     ProductsModule,
     AuthModule,
     StockModule,
   ],
+  exports: [],
   controllers: [AppController],
   providers: [AppService],
 })
