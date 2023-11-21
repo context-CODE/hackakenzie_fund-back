@@ -13,7 +13,7 @@ export class AddressService {
   ) {}
 
   async checkUser(userId: string) {
-    const findUser: User = await this.usersService.findOne(userId);
+    const findUser: User = await this.usersService.findOne(userId, false);
 
     if (!findUser) {
       throw new NotFoundException('user not found!');

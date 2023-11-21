@@ -17,5 +17,6 @@ import { ImagesModule } from '../images/images.module';
       useClass: ProductsPrismaRepository,
     },
   ],
+  exports: [ProductsService],
 })
 export class ProductsModule {}

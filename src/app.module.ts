@@ -10,7 +10,6 @@ import { ImagesModule } from './modules/images/images.module';
 import { AddressModule } from './modules/address/address.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { WishlistsModule } from './wishlists/wishlists.module';
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { WishlistsModule } from './wishlists/wishlists.module';
     AddressModule,
     ProductsModule,
     AuthModule,
-    WishlistsModule,
   ],
   exports: [],
   controllers: [AppController],

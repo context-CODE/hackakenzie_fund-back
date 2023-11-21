@@ -1,11 +1,19 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './repository/users.repository';
+import { ProductsService } from '../products/products.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private userRepository: UsersRepository) {}
+  constructor(
+    private userRepository: UsersRepository,
+    private readonly productSevice: ProductsService,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const findUser = await this.userRepository.findByEmail(createUserDto.email);
@@ -21,8 +29,8 @@ export class UsersService {
     return await this.userRepository.findByEmail(email);
   }
 
-  async findOne(id: string) {
-    return this.userRepository.findOne(id);
+  async findOne(id: string, wishlists: boolean) {
+    return this.userRepository.findOne(id, wishlists);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
@@ -31,5 +39,19 @@ export class UsersService {
 
   async delete(id: string) {
     await this.userRepository.delete(id);
+  }
+  async addProduct(productId: string, userId) {
+    const user = await this.findOne(userId, false);
+    const product = await this.productSevice.findOne(productId);
+    if (!product || !user) {
+      if (!product && !user) {
+        throw new NotFoundException('user and product not found!');
+      } else if (!user) {
+        throw new NotFoundException('user not found!');
+      } else {
+        throw new NotFoundException('product not found!');
+      }
+    }
+    return this.userRepository.addProduct(productId, userId);
   }
 }
