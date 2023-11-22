@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "shipments" ALTER COLUMN "trackCode" SET DATA TYPE TEXT,
+ALTER COLUMN "shippedAt" DROP DEFAULT;

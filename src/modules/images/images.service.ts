@@ -1,24 +1,35 @@
 import { randomBytes } from 'crypto';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  forwardRef,
+  NotFoundException,
+} from '@nestjs/common';
+import { IdDto } from 'src/common/dto/id.dto';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import { MessageDto } from 'src/common/dto/message.dto';
+import { ProductsService } from '../products/products.service';
 import { ImagesRepository } from './repositories/images.repository';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { CLOUDINARY_FOLDERS } from '../cloudinary/utils/cloudinary-constants';
-import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 
 @Injectable()
 export class ImagesService {
   constructor(
     private imagesRepository: ImagesRepository,
     private readonly cloudinaryService: CloudinaryService,
+    @Inject(forwardRef(() => ProductsService))
+    private readonly productsService: ProductsService,
   ) {}
   async createOne(
     file: Express.Multer.File,
     { title, isCover }: CreateImageDto,
+    product: IdDto,
   ) {
     try {
+      await this.productsService.findOne(product.id);
+
       const filename = file.originalname.split('.')[0];
       const cloudinaryId = randomBytes(8).toString('hex');
 
@@ -27,7 +38,7 @@ export class ImagesService {
           file,
           cloudinaryId,
           filename,
-          CLOUDINARY_FOLDERS.SAMPLES,
+          CLOUDINARY_FOLDERS.PRODUCTS,
         ),
       );
 
@@ -36,31 +47,36 @@ export class ImagesService {
         isCover,
         cloudinaryId,
         path: secure_url,
+        productId: product.id,
       };
 
       const image = await Promise.resolve(promise);
 
-      return this.imagesRepository.createOne(image);
+      return this.imagesRepository.createOne(image, product.id);
     } catch (error) {
-      return new ExceptionsHandler(error);
+      return error.response;
     }
   }
 
-  async createMany(files: Array<Express.Multer.File>, data: CreateImageDto[]) {
+  async createMany(
+    files: Array<Express.Multer.File>,
+    data: CreateImageDto[],
+    product: IdDto,
+  ) {
     try {
+      await this.productsService.findOne(product.id);
+
       const promises = files.map(async (file, index) => {
         const filename = file.originalname.split('.')[0];
         const cloudinaryId = randomBytes(8).toString('hex');
-        const isCoverValid = /true/.test(`${data[index].isCover}`)
-          ? true
-          : false;
+        const isCoverValid = !!/true/.test(`${data[index].isCover}`);
 
         const { secure_url } = await Promise.resolve(
           this.cloudinaryService.uploadFile(
             file,
             cloudinaryId,
             filename,
-            CLOUDINARY_FOLDERS.SAMPLES,
+            CLOUDINARY_FOLDERS.PRODUCTS,
           ),
         );
 
@@ -74,10 +90,9 @@ export class ImagesService {
 
       const images = await Promise.all(promises);
 
-      return this.imagesRepository.createMany(images);
+      return this.imagesRepository.createMany(images, product.id);
     } catch (error) {
-      console.log(error);
-      return new ExceptionsHandler(error);
+      return error.response;
     }
   }
 

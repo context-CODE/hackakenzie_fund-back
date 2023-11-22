@@ -12,20 +12,32 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { ConfigModule } from '@nestjs/config';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { ImagesModule } from './modules/images/images.module';
+import { AddressModule } from './modules/addresses/address.module';
+import { ShipmentsModule } from './modules/shipments/shipments.module';
+import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserOwnerMiddleware } from './modules/users/middleware/userOwner.middleware';
 import { UsersController } from './modules/users/users.controller';
+import { StockModule } from './modules/stock/stock.module';
+import { CartsModule } from './modules/carts/carts.module';
+
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     CommonModule,
     CategoriesModule,
     UsersModule,
     CloudinaryModule,
-    ConfigModule.forRoot({ isGlobal: true }),
     ImagesModule,
+    AddressModule,
+    ShipmentsModule,
+    ProductsModule,
     AuthModule,
+    StockModule,
+    CartsModule,
   ],
+  exports: [],
   controllers: [AppController],
   providers: [AppService],
 })

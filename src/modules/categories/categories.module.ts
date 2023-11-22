@@ -6,6 +6,7 @@ import { CategoriesRepository } from './repositories/categories.repository';
 import { CategoriesPrismaRepository } from './repositories/prisma/categories-prisma.repository';
 
 @Module({
+  exports: [CategoriesService],
   controllers: [CategoriesController],
   providers: [
     CategoriesService,
