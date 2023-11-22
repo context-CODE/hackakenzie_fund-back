@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
@@ -8,6 +13,8 @@ import { ConfigModule } from '@nestjs/config';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { ImagesModule } from './modules/images/images.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { UserOwnerMiddleware } from './modules/users/middleware/userOwner.middleware';
+import { UsersController } from './modules/users/users.controller';
 
 @Module({
   imports: [
@@ -22,4 +29,14 @@ import { AuthModule } from './modules/auth/auth.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(UserOwnerMiddleware)
+      .exclude({
+        path: 'user',
+        method: RequestMethod.POST,
+      })
+      .forRoutes(UsersController);
+  }
+}
