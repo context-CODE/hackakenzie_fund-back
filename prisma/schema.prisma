@@ -34,6 +34,7 @@ model User {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
+  address           Address[]
 
   @@map("users")
 }
@@ -55,6 +56,43 @@ model Image {
   @@map("images")
 }
 
+model Address {
+  id          String      @id @default(uuid())
+  responsible String      @db.VarChar(90)
+  district    String      @db.VarChar(50)
+  zipCode     String      @db.Char(8)
+  street      String      @db.VarChar(50)
+  city        String      @db.VarChar(50)
+  state       String      @db.Char(2)
+  number      String      @default("s/n") @db.VarChar(5)
+  complement  String?     @db.VarChar(20)
+  reference   String?     @db.VarChar(30)
+  isDefault   Boolean     @default(false)
+  user        User        @relation(fields: [userId], references: [id])
+  userId      String
+  shipments   Shipments[]
+
+  @@map("addresses")
+}
+
+enum Role {
+  standard
+  fast
+}
+
+model Shipments {
+  id             String    @id @default(uuid())
+  fee            Float     @db.DoublePrecision
+  trackCode      String?   @db.Text
+  shippedAt      DateTime?
+  deliveredUntil DateTime
+  option         Role      @default(standard)
+  address        Address   @relation(fields: [addressId], references: [id])
+  addressId      String
+
+  @@map("shipments")
+}
+
 model Product {
   id             String    @id @default(uuid())
   name           String    @unique @db.VarChar(120)
@@ -70,6 +108,17 @@ model Product {
   category       Category  @relation(fields: [categoryId], references: [id])
   categoryId     String
   images         Image[]
+  stock          Stock?
 
   @@map("products")
+}
+
+model Stock {
+  id        String  @id @default(uuid())
+  quantity  Int
+  minimum   Int     @default(1)
+  product   Product @relation(fields: [productId], references: [id])
+  productId String  @unique
+
+  @@map("stock")
 }

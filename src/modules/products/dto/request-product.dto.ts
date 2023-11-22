@@ -10,6 +10,7 @@ import { IsEntity } from 'src/common/decorators/isEntity.decorator';
 import { IsCurrency } from 'src/common/decorators/isCurrency.decorator';
 import { CreateImageDto } from 'src/modules/images/dto/create-image.dto';
 import { IsNotEmptyString } from 'src/common/decorators/isNoEmptyString.decorator';
+import { CreateStockDto } from 'src/modules/stock/dto/create-stock.dto';
 
 class SpecificationProductDto {
   @IsNotEmptyString()
@@ -77,4 +78,8 @@ export class RequestProductDto {
   @ValidateNested()
   @Type(() => CreateImageDto)
   images: CreateImageDto[];
+
+  @ValidateNested()
+  @Type(() => CreateStockDto)
+  stock: CreateStockDto;
 }

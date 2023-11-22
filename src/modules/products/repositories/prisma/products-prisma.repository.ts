@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Product } from '../../entities/product.entity';
@@ -42,11 +41,13 @@ export class ProductsPrismaRepository implements ProductsRepository {
         },
       },
       include: {
+        stock: true,
+        images: true,
         category: true,
       },
     });
 
-    return product;
+    return plainToInstance(Product, product);
   }
 
   async findBySku(sku: string): Promise<Product | null> {
@@ -58,11 +59,13 @@ export class ProductsPrismaRepository implements ProductsRepository {
         },
       },
       include: {
+        stock: true,
+        images: true,
         category: true,
       },
     });
 
-    return product;
+    return plainToInstance(Product, product);
   }
 
   async findAll(paginationDto: PaginationDto): Promise<Product[]> {
@@ -72,7 +75,9 @@ export class ProductsPrismaRepository implements ProductsRepository {
       skip: offset,
       take: limit ?? DEFAULT_PAGINATION_SIZE.PRODUCTS,
       include: {
+        stock: true,
         images: true,
+        category: true,
       },
     });
 
@@ -83,7 +88,9 @@ export class ProductsPrismaRepository implements ProductsRepository {
     const product = await this.prisma.product.findUnique({
       where: { id },
       include: {
+        stock: true,
         images: true,
+        category: true,
       },
     });
 
