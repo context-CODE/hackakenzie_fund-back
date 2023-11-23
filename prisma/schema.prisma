@@ -35,6 +35,7 @@ model User {
   updatedAt         DateTime  @updatedAt
   deletedAt         DateTime?
   address           Address[]
+  cart              Cart?
 
   @@map("users")
 }
@@ -94,21 +95,22 @@ model Shipments {
 }
 
 model Product {
-  id             String    @id @default(uuid())
-  name           String    @unique @db.VarChar(120)
-  slug           String    @db.Text
-  price          Float     @db.DoublePrecision
-  description    String    @db.Text
-  color          String    @db.VarChar(50)
-  sku            String    @unique @db.VarChar(11)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id             String     @id @default(uuid())
+  name           String     @unique @db.VarChar(120)
+  slug           String     @db.Text
+  price          Float      @db.DoublePrecision
+  description    String     @db.Text
+  color          String     @db.VarChar(50)
+  sku            String     @unique @db.VarChar(11)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
   deletedAt      DateTime?
-  specifications Json      @db.JsonB()
-  category       Category  @relation(fields: [categoryId], references: [id])
+  specifications Json       @db.JsonB()
+  category       Category   @relation(fields: [categoryId], references: [id])
   categoryId     String
   images         Image[]
   stock          Stock?
+  cartItems      CartItem[]
 
   @@map("products")
 }
@@ -121,4 +123,26 @@ model Stock {
   productId String  @unique
 
   @@map("stock")
+}
+
+model Cart {
+  id         String     @id @default(uuid())
+  customer   User       @relation(fields: [customerId], references: [id])
+  customerId String     @unique
+  cartItems  CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        String    @id @default(uuid())
+  cart      Cart      @relation(fields: [cartId], references: [id])
+  cartId    String
+  product   Product   @relation(fields: [productId], references: [id])
+  productId String
+  price     Float     @db.DoublePrecision
+  quantity  Int
+  deletedAt DateTime?
+
+  @@map("cartItems")
 }
