@@ -20,5 +20,8 @@
     "originalname",
     "streamifier"
   ],
+  "[handlebars]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
   
 }
