@@ -1,6 +1,6 @@
 import { IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { IsNotEmptyString } from 'src/common/decorators/is-not-empty-string.decorator';
+import { IsNotEmptyString } from 'src/common/decorators/isNoEmptyString.decorator';
 
 export class CreateImageDto {
   @IsNotEmptyString()

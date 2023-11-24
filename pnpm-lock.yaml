@@ -44,6 +44,9 @@ dependencies:
   cloudinary:
     specifier: ^1.41.0
     version: 1.41.0
+  handlebars:
+    specifier: ^4.7.8
+    version: 4.7.8
   nodemailer:
     specifier: ^6.9.7
     version: 6.9.7
@@ -4033,7 +4036,6 @@ packages:
     optionalDependencies:
       uglify-js: 3.17.4
     dev: false
-    optional: true
 
   /has-flag@3.0.0:
     resolution: {integrity: sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw==}
@@ -7765,7 +7767,6 @@ packages:
     resolution: {integrity: sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==}
     requiresBuild: true
     dev: false
-    optional: true
 
   /wrap-ansi@6.2.0:
     resolution: {integrity: sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==}
