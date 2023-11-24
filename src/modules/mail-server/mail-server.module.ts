@@ -1,8 +1,10 @@
-import { Module } from '@nestjs/common';
+import { join } from 'path';
+import { Module, forwardRef } from '@nestjs/common';
+import { UsersModule } from '../users/users.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { MailServerService } from './mail-server.service';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { join } from 'path';
+import { MailServerController } from './mail-server.controller';
 
 @Module({
   providers: [MailServerService],
@@ -38,6 +40,8 @@ import { join } from 'path';
         },
       },
     }),
+    forwardRef(() => UsersModule),
   ],
+  controllers: [MailServerController],
 })
 export class MailServerModule {}

@@ -10,15 +10,27 @@ export class User {
 
   @Exclude()
   password: string;
+
   cpf: string;
   phone: string;
   birthday: string;
+
+  @Exclude()
   type: $Enums.Type;
+
+  @Exclude()
   resetToken: string;
+
+  @Exclude()
   isEmailVerified: boolean;
+
+  @Exclude()
   confirmationToken: string;
+
   createdAt: Date;
   updatedAt: Date;
+
+  @Exclude()
   deletedAt: Date;
 
   constructor() {
