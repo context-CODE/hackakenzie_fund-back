@@ -2,4 +2,4 @@
 .github/
 pnpm-lock.yaml
 *.md
-.src/modules/mail-server/templates
+src/modules/mail-server/templates/**
