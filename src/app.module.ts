@@ -14,6 +14,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MailServerModule } from './modules/mail-server/mail-server.module';
 import { StockModule } from './modules/stock/stock.module';
 import { CartsModule } from './modules/carts/carts.module';
+import { OrdersModule } from './modules/orders/orders.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { CartsModule } from './modules/carts/carts.module';
     MailServerModule,
     StockModule,
     CartsModule,
+    OrdersModule,
   ],
   exports: [],
   controllers: [AppController],

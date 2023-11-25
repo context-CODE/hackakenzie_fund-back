@@ -12,12 +12,16 @@ export class CartsService {
   ) {}
   async create(customerId: string, createCartDto: CreateCartDto) {
     const newCart = await this.cartsRepository.create(customerId);
-    const newCartItems = await this.cartItemsService.createMany(
+    const cartItems = await this.cartItemsService.createMany(
       createCartDto.cartItems,
       newCart.id,
     );
 
-    return { ...newCart, cartItems: newCartItems };
+    const total = cartItems.reduce((acc, current) => acc + current.subTotal, 0);
+
+    await this.cartsRepository.updateTotal(total, newCart.id);
+
+    return { ...newCart, total, cartItems };
   }
 
   async findOne(id: string) {

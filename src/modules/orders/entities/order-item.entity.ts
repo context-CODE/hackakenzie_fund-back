@@ -1,8 +1,8 @@
 import { randomUUID } from 'crypto';
-import { Cart } from './cart.entity';
+import { Order } from './order.entity';
 import { Product } from 'src/modules/products/entities/product.entity';
 
-export class CartItem {
+export class OrderItem {
   readonly id: string;
 
   price: number;
@@ -10,7 +10,7 @@ export class CartItem {
 
   readonly subTotal: number;
 
-  readonly cart: Cart;
+  readonly order: Order;
   readonly product: Product;
 
   constructor() {

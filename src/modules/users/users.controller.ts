@@ -1,17 +1,19 @@
 import {
-  Controller,
   Get,
   Post,
   Body,
   Patch,
   Param,
   Delete,
-  ParseUUIDPipe,
   HttpCode,
+  UseGuards,
+  Controller,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -23,11 +25,13 @@ export class UsersController {
   }
 
   @Get(':uuid')
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.usersService.findOne(uuid);
   }
 
   @Patch(':uuid')
+  @UseGuards(JwtAuthGuard)
   update(
     @Param('uuid', new ParseUUIDPipe()) uuid: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -36,6 +40,7 @@ export class UsersController {
   }
 
   @Delete(':uuid')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(204)
   delete(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.usersService.delete(uuid);

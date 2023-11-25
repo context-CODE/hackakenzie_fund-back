@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCartItemDto } from './dto/create-cart-item.dto';
+import { CreateOrderItemDto } from './dto/create-order-item.dto';
 import { ProductsService } from '../products/products.service';
-import { CartItemsRepository } from './repositories/cart-items.repository';
+import { OrderItemsRepository } from './repositories/order-items.repository';
 
 @Injectable()
-export class CartItemsService {
+export class OrderItemsService {
   constructor(
-    private cartItemsRepository: CartItemsRepository,
+    private orderItemsRepository: OrderItemsRepository,
     private readonly productsService: ProductsService,
   ) {}
-  async createMany(data: CreateCartItemDto[], cartId: string) {
+  async createMany(data: CreateOrderItemDto[], orderId: string) {
     const promises = data.map(async (item) => {
       if (!item.price) {
         const product = await this.productsService.findOne(item.product.id);
@@ -24,8 +24,11 @@ export class CartItemsService {
     });
 
     const products = await Promise.all(promises);
-    const cartItems = await this.cartItemsRepository.create(products, cartId);
+    const orderItems = await this.orderItemsRepository.create(
+      products,
+      orderId,
+    );
 
-    return cartItems;
+    return orderItems;
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { plainToInstance, plainToClass } from 'class-transformer';
 import { Stock } from '../../entities/stock.entity';
 import { PrismaService } from 'src/database/prisma.service';
@@ -11,6 +11,17 @@ import { UpdateStockDto } from '../../dto/update-stock.dto';
 export class StockPrismaRepository implements StockRepository {
   constructor(private prisma: PrismaService) {}
   async create(data: CreateStockDto, productId: string): Promise<Stock | void> {
+    const product = await this.prisma.product.findUnique({
+      where: { id: productId },
+      include: {
+        stock: true,
+      },
+    });
+
+    if (product.stock) {
+      throw new ConflictException('The product already has a stock');
+    }
+
     const stock = new Stock();
 
     Object.assign(stock, {

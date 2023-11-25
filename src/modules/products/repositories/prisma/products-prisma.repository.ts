@@ -25,7 +25,11 @@ export class ProductsPrismaRepository implements ProductsRepository {
       data: {
         ...productData,
         specifications: specificationsJson,
-        categoryId: category.id,
+        category: {
+          connect: {
+            id: category.id,
+          },
+        },
       },
     });
 

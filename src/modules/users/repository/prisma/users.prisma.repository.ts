@@ -40,7 +40,7 @@ export class UsersPrismaRepository implements UsersRepository {
 
       if (!findUser) throw new NotFoundException('user not found!');
 
-      return findUser;
+      return plainToInstance(User, findUser);
     } catch (error) {
       return error.response;
     }

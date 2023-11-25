@@ -36,6 +36,7 @@ model User {
   deletedAt         DateTime?
   address           Address[]
   cart              Cart?
+  order             Order?
 
   @@map("users")
 }
@@ -90,27 +91,29 @@ model Shipments {
   option         Role      @default(standard)
   address        Address   @relation(fields: [addressId], references: [id])
   addressId      String
+  order          Order?
 
   @@map("shipments")
 }
 
 model Product {
-  id             String     @id @default(uuid())
-  name           String     @unique @db.VarChar(120)
-  slug           String     @db.Text
-  price          Float      @db.DoublePrecision
-  description    String     @db.Text
-  color          String     @db.VarChar(50)
-  sku            String     @unique @db.VarChar(11)
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  id             String      @id @default(uuid())
+  name           String      @unique @db.VarChar(120)
+  slug           String      @db.Text
+  price          Float       @db.DoublePrecision
+  description    String      @db.Text
+  color          String      @db.VarChar(50)
+  sku            String      @unique @db.VarChar(11)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
   deletedAt      DateTime?
-  specifications Json       @db.JsonB()
-  category       Category   @relation(fields: [categoryId], references: [id])
+  specifications Json        @db.JsonB()
+  category       Category    @relation(fields: [categoryId], references: [id])
   categoryId     String
   images         Image[]
   stock          Stock?
   cartItems      CartItem[]
+  orderItems     OrderItem[]
 
   @@map("products")
 }
@@ -126,23 +129,60 @@ model Stock {
 }
 
 model Cart {
-  id         String     @id @default(uuid())
-  customer   User       @relation(fields: [customerId], references: [id])
-  customerId String     @unique
-  cartItems  CartItem[]
+  id         String @id @default(uuid())
+  customer   User   @relation(fields: [customerId], references: [id])
+  customerId String @unique
+  total      Float  @default(0) @db.DoublePrecision
+
+  cartItems CartItem[]
 
   @@map("carts")
 }
 
 model CartItem {
-  id        String    @id @default(uuid())
-  cart      Cart      @relation(fields: [cartId], references: [id])
+  id        String  @id @default(uuid())
+  cart      Cart    @relation(fields: [cartId], references: [id])
   cartId    String
-  product   Product   @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
   productId String
-  price     Float     @db.DoublePrecision
+  price     Float   @db.DoublePrecision
   quantity  Int
-  deletedAt DateTime?
+  subTotal  Float   @db.DoublePrecision
 
   @@map("cartItems")
+}
+
+enum StatusOrder {
+  confirmed
+  preparing
+  shipped
+  canceled
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  status     StatusOrder @default(confirmed)
+  orderedAt  DateTime    @default(now())
+  customer   User        @relation(fields: [customerId], references: [id])
+  customerId String      @unique
+  deliverTo  Shipments   @relation(fields: [deliveryId], references: [id])
+  deliveryId String      @unique
+  total      Float       @default(0) @db.DoublePrecision
+
+  orderItems OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  price     Float   @db.DoublePrecision
+  quantity  Int
+  subTotal  Float   @db.DoublePrecision
+
+  @@map("orderItems")
 }
