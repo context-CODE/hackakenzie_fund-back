@@ -1,0 +1,139 @@
+{{#> layout }}
+<!-- start hero -->
+<tr>
+  <td align="center" bgcolor="#e9ecef">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+      <tr>
+        <td align="left"
+          style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
+          <h1
+            style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px; text-align: center;">
+            {{value.header}}</h1>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<!-- end hero -->
+<!-- start copy block -->
+<tr>
+  <td align='center' bgcolor='#e9ecef'>
+    {{!-- {{#if value.receipt}} --}}
+
+    <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%"
+      style="table-layout: fixed;">
+      <tr>
+        <td style="padding:25px 20px 25px 20px;line-height:20px;text-align:inherit;" height="100%" valign="top"
+          bgcolor="">
+          <p style="text-align: left;">{{value.text}}</p>
+        </td>
+      </tr>
+    </table>
+    <table class="module" role="module" data-type="code" border="0" cellpadding="0" cellspacing="0" width="100%"
+      style="table-layout: fixed;">
+      <tr>
+        <td height="100%" valign="top">
+          <div>
+            <table align="center" border="0" cellpadding="20" cellspacing="0" style="width:100%;">
+              <tbody>
+
+                {{#each value.items}}
+
+                <tr>
+                  <td style="width:200px;max-width:33.333%;"><img class="max-width" border="0"
+                      style="display:block;color:#000000;text-decoration:none;font-family:Helvetica, arial, sans-serif;font-size:16px;max-width:100% !important;width:100%;height:auto !important;"
+                      src="{{this.image}}" alt="" width="200"></td>
+                  <td style="width:200px;max-width:33.333%;">
+                    <div style="text-align: center;">{{this.text}}</div>
+                  </td>
+                  <td style="width:200px;max-width:33.333%;">
+                    <div style="text-align: center;">{{this.price}}</div>
+                  </td>
+                </tr>
+
+                {{/each}}
+
+                <tr>
+                  <td style="width:200px;max-width:33.333%;">&nbsp;</td>
+                  <td style="width:200px;max-width:33.333%;">
+                    <div style="text-align: center;"><strong>Total</strong></div>
+                  </td>
+                  <td style="width:200px;max-width:33.333%;">
+                    <div style="text-align: center;"><strong>{{value.total}}</strong></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </td>
+      </tr>
+    </table>
+    <table class="module" role="module" data-type="divider" border="0" cellpadding="0" cellspacing="0" width="100%"
+      style="table-layout: fixed;">
+      <tr>
+        <td style="padding:0px 0px 0px 0px;" role="module-content" height="100%" valign="top" bgcolor="">
+          <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" height="5px"
+            style="line-height:5px; font-size:5px;">
+            <tr>
+              <td style="padding: 0px 0px 5px 0px;" bgcolor="#ebebeb"></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    {{!-- {{/if}} --}}
+
+    <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%"
+      style="table-layout: fixed;">
+      <tr>
+        <td style="padding:25px 20px 25px 20px;line-height:20px;text-align:inherit;" height="100%" valign="top"
+          bgcolor="">
+          <h2 style="text-align: center;"><span style="color:#333333;">Delivery Address</span></h2>
+
+        </td>
+      </tr>
+    </table>
+
+    <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%"
+      style="table-layout: fixed;">
+      <tr>
+        <td style="padding:0px 0px 30px 0px;line-height:22px;text-align:inherit;" height="100%" valign="top" bgcolor="">
+          <div style="text-align: center;">
+            <font color="#333333">{{value.name}}</font>
+          </div>
+
+          <div style="text-align: center;">
+            <font color="#333333">{{value.address01}}</font>
+          </div>
+
+          <div style="text-align: center;">
+            <font color="#333333">{{value.address02}}</font>
+          </div>
+
+          <div style="text-align: center;">
+            <font color="#333333">{{value.city}}, {{value.state}} {{value.zip}}</font>
+          </div>
+
+        </td>
+      </tr>
+    </table>
+
+    <table class="module" role="module" data-type="divider" border="0" cellpadding="0" cellspacing="0" width="100%"
+      style="table-layout: fixed;">
+      <tr>
+        <td style="padding:0px 0px 0px 0px;" role="module-content" height="100%" valign="top" bgcolor="">
+          <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" height="5px"
+            style="line-height:5px; font-size:5px;">
+            <tr>
+              <td style="padding: 0px 0px 5px 0px;" bgcolor="#ebebeb"></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<!-- end copy block -->
+{{/layout}}

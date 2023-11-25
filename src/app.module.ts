@@ -11,6 +11,7 @@ import { AddressModule } from './modules/addresses/address.module';
 import { ShipmentsModule } from './modules/shipments/shipments.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { MailServerModule } from './modules/mail-server/mail-server.module';
 import { StockModule } from './modules/stock/stock.module';
 import { CartsModule } from './modules/carts/carts.module';
 
@@ -26,6 +27,7 @@ import { CartsModule } from './modules/carts/carts.module';
     ShipmentsModule,
     ProductsModule,
     AuthModule,
+    MailServerModule,
     StockModule,
     CartsModule,
   ],
