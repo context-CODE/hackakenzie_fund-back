@@ -33,6 +33,19 @@ export class OrdersService {
 
     await this.ordersRepository.updateTotal(total, newOrder.id);
 
+    if (
+      newOrder.payment.status == 'rejected' ||
+      newOrder.payment.status == 'pending'
+    ) {
+      return { ...newOrder, total, orderItems };
+    }
+
+    orderItems.forEach(async (_, index) => {
+      await this.orderItemsService.updateStock(
+        createOrderItemsDto.orderItems[index].product.id,
+      );
+    });
+
     return { ...newOrder, total, orderItems };
   }
 

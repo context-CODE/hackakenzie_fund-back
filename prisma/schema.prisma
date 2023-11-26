@@ -170,6 +170,7 @@ model Order {
   total      Float       @default(0) @db.DoublePrecision
 
   orderItems OrderItem[]
+  payment    Payment?
 
   @@map("orders")
 }
@@ -185,4 +186,21 @@ model OrderItem {
   subTotal  Float   @db.DoublePrecision
 
   @@map("orderItems")
+}
+
+enum StatusPayment {
+  pending
+  approved
+  rejected
+}
+
+model Payment {
+  id        String        @id @default(uuid())
+  status    StatusPayment @default(pending)
+  createdAt DateTime      @default(now())
+  paidAt    DateTime?
+  order     Order         @relation(fields: [orderId], references: [id])
+  orderId   String        @unique
+
+  @@map("payments")
 }

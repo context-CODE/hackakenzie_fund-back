@@ -14,7 +14,7 @@ export class OrderItemsPrismaRepository implements OrderItemsRepository {
   ): Promise<OrderItem[]> {
     const newOrderItems = new Array(data.length).fill({});
 
-    data.forEach(async (item, index) => {
+    data.forEach((item, index) => {
       newOrderItems[index] = new OrderItem();
       const { price, quantity, product } = item;
 
@@ -29,10 +29,6 @@ export class OrderItemsPrismaRepository implements OrderItemsRepository {
 
     await this.prisma.orderItem.createMany({
       data: newOrderItems,
-    });
-
-    newOrderItems.forEach(async (_, index) => {
-      await this.updateStock(data[index].product.id);
     });
 
     return plainToInstance(OrderItem, newOrderItems);
