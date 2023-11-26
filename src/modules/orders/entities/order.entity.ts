@@ -10,7 +10,7 @@ export class Order {
   orderedAt: Date;
   status: StatusOrder;
 
-  readonly customer?: User;
+  readonly customer: User;
   readonly deliverTo: Shipment;
   readonly orderItems?: OrderItem[];
 
@@ -18,10 +18,5 @@ export class Order {
 
   constructor() {
     this.id = randomUUID();
-
-    this.total = this.orderItems?.reduce(
-      (acc, current) => acc + current.subTotal,
-      0,
-    );
   }
 }

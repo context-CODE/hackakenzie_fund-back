@@ -24,6 +24,9 @@ export class OrdersPrismaRepository implements OrdersRepository {
           },
         },
       },
+      include: {
+        deliverTo: true,
+      },
     });
 
     return plainToInstance(Order, newOrder);
@@ -39,14 +42,14 @@ export class OrdersPrismaRepository implements OrdersRepository {
     if (customerId) {
       orders = await this.prisma.order.findMany({
         where: { customerId },
-        include: { deliverTo: true },
+        include: { customer: true, deliverTo: true },
         skip: offset,
         take: limit ?? DEFAULT_PAGINATION_SIZE.ORDERS,
       });
     }
 
     orders = await this.prisma.order.findMany({
-      include: { deliverTo: true },
+      include: { customer: true, deliverTo: true },
       skip: offset,
       take: limit ?? DEFAULT_PAGINATION_SIZE.ORDERS,
     });
@@ -58,6 +61,8 @@ export class OrdersPrismaRepository implements OrdersRepository {
     const order = await this.prisma.order.findUnique({
       where: { id },
       include: {
+        customer: true,
+        deliverTo: true,
         orderItems: true,
       },
     });

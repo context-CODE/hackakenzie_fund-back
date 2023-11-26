@@ -1,16 +1,15 @@
-import { ImagesService } from '../images/images.service';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { RequestProductDto } from './dto/request-product.dto';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
 import {
   Inject,
   Injectable,
   forwardRef,
   NotFoundException,
 } from '@nestjs/common';
-import { ProductsRepository } from './repositories/products.repository';
-import { StockService } from '../stock/stock.service';
+import { ImagesService } from '../images/images.service';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { RequestProductDto } from './dto/request-product.dto';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { CategoriesService } from '../categories/categories.service';
+import { ProductsRepository } from './repositories/products.repository';
 
 @Injectable()
 export class ProductsService {
@@ -18,12 +17,10 @@ export class ProductsService {
     private productsRepository: ProductsRepository,
     @Inject(forwardRef(() => ImagesService))
     private readonly imagesService: ImagesService,
-    @Inject(forwardRef(() => StockService))
-    private readonly stockService: StockService,
     private readonly categoriesService: CategoriesService,
   ) {}
   async create(files: Array<Express.Multer.File>, data: RequestProductDto) {
-    const { images, stock, ...productData } = data;
+    const { images, ...productData } = data;
 
     await this.categoriesService.findOne(productData.category.id);
 
@@ -31,9 +28,8 @@ export class ProductsService {
     const newImages = await this.imagesService.createMany(files, images, {
       id: newProduct.id,
     });
-    const newStock = await this.stockService.create(stock, newProduct.id);
 
-    return { ...newProduct, stock: newStock, images: newImages };
+    return { ...newProduct, images: newImages };
   }
 
   findAll(paginationDto: PaginationDto) {

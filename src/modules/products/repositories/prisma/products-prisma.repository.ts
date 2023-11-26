@@ -1,25 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { Product } from '../../entities/product.entity';
 import { PrismaService } from 'src/database/prisma.service';
+import { JsonObject } from '@prisma/client/runtime/library';
 import { ProductsRepository } from '../products.repository';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { CreateProductDto } from '../../dto/create-product.dto';
 import { UpdateProductDto } from '../../dto/update-product.dto';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { JsonObject } from '@prisma/client/runtime/library';
 import { DEFAULT_PAGINATION_SIZE } from 'src/common/util/common.constants';
 
 @Injectable()
 export class ProductsPrismaRepository implements ProductsRepository {
   constructor(private prisma: PrismaService) {}
   async create(data: CreateProductDto): Promise<Product> {
+    await this.findByName(data.name);
+    await this.findBySku(data.sku);
+
     const product = new Product();
 
     Object.assign(product, {
       ...data,
     });
 
-    const { category, specifications, ...productData } = product;
+    const { category, specifications, stock, ...productData } = product;
     const specificationsJson = specifications as JsonObject;
     const newProduct = await this.prisma.product.create({
       data: {
@@ -30,13 +33,21 @@ export class ProductsPrismaRepository implements ProductsRepository {
             id: category.id,
           },
         },
+        stock: {
+          create: {
+            ...stock,
+          },
+        },
+      },
+      include: {
+        stock: true,
       },
     });
 
     return plainToInstance(Product, newProduct);
   }
 
-  async findByName(name: string): Promise<Product | null> {
+  async findByName(name: string): Promise<void> {
     const product = await this.prisma.product.findFirst({
       where: {
         name: {
@@ -51,10 +62,12 @@ export class ProductsPrismaRepository implements ProductsRepository {
       },
     });
 
-    return plainToInstance(Product, product);
+    if (product) {
+      throw new ConflictException('Product already exists');
+    }
   }
 
-  async findBySku(sku: string): Promise<Product | null> {
+  async findBySku(sku: string): Promise<void> {
     const product = await this.prisma.product.findFirst({
       where: {
         sku: {
@@ -69,7 +82,9 @@ export class ProductsPrismaRepository implements ProductsRepository {
       },
     });
 
-    return plainToInstance(Product, product);
+    if (product) {
+      throw new ConflictException('Product already exists');
+    }
   }
 
   async findAll(paginationDto: PaginationDto): Promise<Product[]> {
@@ -102,6 +117,14 @@ export class ProductsPrismaRepository implements ProductsRepository {
   }
 
   async update(data: UpdateProductDto, id: string): Promise<Product | null> {
+    if (data.name) {
+      await this.findByName(data.name);
+    }
+
+    if (data.sku) {
+      await this.findBySku(data.sku);
+    }
+
     const oldProduct = await this.findOne(id);
 
     const { specifications, ...productData } = data;

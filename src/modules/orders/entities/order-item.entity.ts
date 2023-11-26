@@ -15,7 +15,5 @@ export class OrderItem {
 
   constructor() {
     this.id = randomUUID();
-
-    this.subTotal = this.quantity * this.price;
   }
 }

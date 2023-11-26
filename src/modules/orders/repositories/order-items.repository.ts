@@ -6,4 +6,6 @@ export abstract class OrderItemsRepository {
     data: CreateOrderItemDto[],
     orderId: string,
   ): Promise<OrderItem[]>;
+
+  abstract updateStock(productId: string): Promise<void>;
 }
