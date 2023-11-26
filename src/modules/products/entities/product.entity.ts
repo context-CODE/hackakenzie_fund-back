@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import { JsonValue } from '@prisma/client/runtime/library';
+import { Stock } from 'src/modules/stock/entities/stock.entity';
 import { Category } from 'src/modules/categories/entities/category.entity';
 
 export class Product {
@@ -17,6 +18,7 @@ export class Product {
   specifications: JsonValue;
 
   readonly category: Category;
+  readonly stock: Stock;
 
   constructor() {
     this.id = randomUUID();

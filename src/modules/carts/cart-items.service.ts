@@ -11,13 +11,16 @@ export class CartItemsService {
   ) {}
   async createMany(data: CreateCartItemDto[], cartId: string) {
     const promises = data.map(async (item) => {
-      const product = await this.productsService.findOne(item.product.id);
-      const productWithPrice = {
-        ...item,
-        price: product.price,
-      };
+      if (!item.price) {
+        const product = await this.productsService.findOne(item.product.id);
 
-      return productWithPrice;
+        return {
+          ...item,
+          price: product.price,
+        };
+      }
+
+      return item;
     });
 
     const products = await Promise.all(promises);

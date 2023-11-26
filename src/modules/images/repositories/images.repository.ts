@@ -9,6 +9,7 @@ export abstract class ImagesRepository {
     productId: string,
   ): Promise<Image[]>;
   abstract findOne(id: string): Promise<Image | null>;
+  abstract findAll(productId: string): Promise<Image[]>;
   abstract update(data: UpdateImageDto, id: string): Promise<Image>;
   abstract remove(id: string): Promise<void>;
 }

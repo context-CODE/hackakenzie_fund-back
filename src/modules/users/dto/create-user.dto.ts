@@ -1,33 +1,41 @@
 import { hashSync } from 'bcryptjs';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsOptional,
+  IsString,
+  Length,
+  MaxLength,
+} from 'class-validator';
+import { IsNotEmptyString } from 'src/common/decorators/isNoEmptyString.decorator';
+import { IsPassword } from 'src/common/decorators/isPassword.decorator';
 
 export class CreateUserDto {
   @IsString()
-  @MaxLength(50)
+  @Length(2, 50)
   fullName: string;
 
-  @IsString()
   @IsEmail()
   @MaxLength(70)
   email: string;
 
-  @IsString()
-  @MinLength(6)
-  @MaxLength(120)
+  @IsPassword()
   @Transform(({ value }) => hashSync(value, 10))
   password: string;
 
-  @MaxLength(11)
   @IsString()
+  @Length(11, 11)
   cpf: string;
 
   @IsString()
+  @Length(11, 11)
   phone: string;
 
-  @IsString()
+  @IsNotEmptyString()
+  @Length(10, 10)
   birthday: string;
 
+  @IsOptional()
   @IsString()
   type: 'SELLER' | 'CLIENT';
 }

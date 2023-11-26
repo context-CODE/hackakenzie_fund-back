@@ -18,8 +18,10 @@ import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserOwnerMiddleware } from './modules/users/middleware/userOwner.middleware';
 import { UsersController } from './modules/users/users.controller';
+import { MailServerModule } from './modules/mail-server/mail-server.module';
 import { StockModule } from './modules/stock/stock.module';
 import { CartsModule } from './modules/carts/carts.module';
+import { OrdersModule } from './modules/orders/orders.module';
 
 @Module({
   imports: [
@@ -33,8 +35,10 @@ import { CartsModule } from './modules/carts/carts.module';
     ShipmentsModule,
     ProductsModule,
     AuthModule,
+    MailServerModule,
     StockModule,
     CartsModule,
+    OrdersModule,
   ],
   exports: [],
   controllers: [AppController],
