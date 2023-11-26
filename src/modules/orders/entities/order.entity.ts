@@ -1,0 +1,22 @@
+import { randomUUID } from 'crypto';
+import { StatusOrder } from '@prisma/client';
+import { OrderItem } from './order-item.entity';
+import { User } from 'src/modules/users/entities/user.entity';
+import { Shipment } from 'src/modules/shipments/entities/shipment.entity';
+
+export class Order {
+  readonly id: string;
+
+  orderedAt: Date;
+  status: StatusOrder;
+
+  readonly customer: User;
+  readonly deliverTo: Shipment;
+  readonly orderItems?: OrderItem[];
+
+  readonly total: number;
+
+  constructor() {
+    this.id = randomUUID();
+  }
+}

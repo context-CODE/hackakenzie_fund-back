@@ -23,7 +23,7 @@ import { MailServerController } from './mail-server.controller';
       defaults: {
         from: '"No Reply" hackakenzie.project@gmail.com',
       },
-      preview: true,
+      // preview: true,
       template: {
         dir: join(__dirname, 'templates'),
         adapter: new HandlebarsAdapter(),

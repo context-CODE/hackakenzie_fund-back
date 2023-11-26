@@ -1,21 +1,19 @@
 import { randomUUID } from 'crypto';
-import { Expose } from 'class-transformer';
+import { Order } from './order.entity';
 import { Product } from 'src/modules/products/entities/product.entity';
 
-export class Stock {
+export class OrderItem {
   readonly id: string;
 
+  price: number;
   quantity: number;
-  minimum: number;
 
-  readonly product?: Product;
+  readonly subTotal: number;
+
+  readonly order: Order;
+  readonly product: Product;
 
   constructor() {
     this.id = randomUUID();
-  }
-
-  @Expose()
-  get isAvailable() {
-    return this.quantity >= this.minimum;
   }
 }

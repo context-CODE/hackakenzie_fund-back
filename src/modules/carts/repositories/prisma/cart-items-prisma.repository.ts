@@ -18,6 +18,7 @@ export class CartItemsPrismaRepository implements CartItemsRepository {
       Object.assign(newCartItems[index], {
         price,
         quantity,
+        subTotal: quantity * price,
         productId: product.id,
         cartId,
       });

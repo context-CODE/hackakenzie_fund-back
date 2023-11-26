@@ -1,5 +1,4 @@
 import {
-  Controller,
   Get,
   Post,
   Body,
@@ -7,8 +6,11 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
+  Controller,
 } from '@nestjs/common';
 import { ShipmentsService } from './shipments.service';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { CreateShipmentDto } from './dto/create-shipment.dto';
 import { UpdateShipmentDto } from './dto/update-shipment.dto';
 
@@ -17,6 +19,7 @@ export class ShipmentsController {
   constructor(private readonly shipmentsService: ShipmentsService) {}
 
   @Post(':addressId')
+  @UseGuards(JwtAuthGuard)
   create(
     @Param('addressId') addressId: string,
     @Body() createShipmentDto: CreateShipmentDto,
@@ -25,11 +28,13 @@ export class ShipmentsController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll(@Query(':addressId') addressId: string) {
     return this.shipmentsService.findAll(addressId);
   }
 
   @Patch(':shipmentId')
+  @UseGuards(JwtAuthGuard)
   update(
     @Param('shipmentId') shipmentId: string,
     @Body() updateShipmentDto: UpdateShipmentDto,
@@ -38,6 +43,7 @@ export class ShipmentsController {
   }
 
   @Delete(':shipmentId')
+  @UseGuards(JwtAuthGuard)
   remove(@Param('shipmentId') shipmentId: string) {
     return this.shipmentsService.remove(shipmentId);
   }

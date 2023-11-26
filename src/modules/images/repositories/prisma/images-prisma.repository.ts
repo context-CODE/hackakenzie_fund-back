@@ -56,6 +56,18 @@ export class ImagesPrismaRepository implements ImagesRepository {
     return plainToInstance(Image, image);
   }
 
+  async findAll(productId: string): Promise<Image[]> {
+    await this.findOne(productId);
+
+    const images = await this.prisma.image.findMany({
+      where: {
+        productId,
+      },
+    });
+
+    return plainToInstance(Image, images);
+  }
+
   async update(data: UpdateImageDto, id: string): Promise<Image> {
     const image = await this.prisma.image.update({
       where: { id },

@@ -5,8 +5,8 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 export abstract class ProductsRepository {
   abstract create(data: CreateProductDto): Promise<Product>;
-  abstract findByName(name: string): Promise<Product | null>;
-  abstract findBySku(sku: string): Promise<Product | null>;
+  abstract findByName(name: string): Promise<void>;
+  abstract findBySku(sku: string): Promise<void>;
   abstract findAll(paginationDto: PaginationDto): Promise<Product[]>;
   abstract findOne(id: string): Promise<Product | null>;
   abstract update(data: UpdateProductDto, id: string): Promise<Product | null>;

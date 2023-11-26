@@ -1,10 +1,11 @@
-import { randomBytes } from 'crypto';
 import {
   Inject,
   Injectable,
   forwardRef,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
+import { randomBytes } from 'crypto';
 import { IdDto } from 'src/common/dto/id.dto';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
@@ -28,7 +29,13 @@ export class ImagesService {
     product: IdDto,
   ) {
     try {
-      await this.productsService.findOne(product.id);
+      const existsImages = await this.imagesRepository.findAll(product.id);
+
+      if (existsImages.length == 5) {
+        throw new BadRequestException(
+          'The product has already reached the limit of 5 images',
+        );
+      }
 
       const filename = file.originalname.split('.')[0];
       const cloudinaryId = randomBytes(8).toString('hex');
@@ -64,7 +71,19 @@ export class ImagesService {
     product: IdDto,
   ) {
     try {
-      await this.productsService.findOne(product.id);
+      const existsImages = await this.imagesRepository.findAll(product.id);
+
+      if (existsImages.length == 5) {
+        throw new BadRequestException(
+          'The product has already reached the limit of 5 images',
+        );
+      }
+
+      if (existsImages.length + data.length > 5) {
+        throw new BadRequestException(
+          `The product cannot exceed the limit of 5 images, and already has ${existsImages.length}`,
+        );
+      }
 
       const promises = files.map(async (file, index) => {
         const filename = file.originalname.split('.')[0];

@@ -21,7 +21,6 @@ export class CartsPrismaRepository implements CartsRepository {
     const cart = await this.prisma.cart.findUnique({
       where: { id },
       include: {
-        customer: true,
         cartItems: true,
       },
     });
@@ -29,8 +28,11 @@ export class CartsPrismaRepository implements CartsRepository {
     return plainToInstance(Cart, cart);
   }
 
-  async update(): Promise<Cart | null> {
-    return;
+  async updateTotal(total: number, id: string): Promise<void> {
+    await this.prisma.cart.update({
+      where: { id },
+      data: { total },
+    });
   }
 
   async remove(id: string): Promise<void> {
