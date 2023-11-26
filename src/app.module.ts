@@ -21,7 +21,6 @@ import { UsersController } from './modules/users/users.controller';
 import { StockModule } from './modules/stock/stock.module';
 import { CartsModule } from './modules/carts/carts.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
