@@ -39,9 +39,8 @@ export class UsersController {
     return this.usersService.update(uuid, updateUserDto);
   }
 
-  @Delete(':uuid')
-  @UseGuards(JwtAuthGuard)
   @HttpCode(204)
+  @Delete(':uuid')
   @UseGuards(JwtAuthGuard)
   delete(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.usersService.delete(uuid);
