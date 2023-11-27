@@ -33,6 +33,28 @@
     "img": "./src/assets/Sisal-Tapete-Essential-I-28200x30029-Camelo-Apaeb-4858-64963-1-zoom.jpg"
   },
   {
+    "name": "Mesa Lateral Decorativa Gabriela Base Dourada Tampo Redondo Branco Branco",
+    "slug": "",
+    "price": 99.51,
+    "description": "Transforme a sua casa com a nossa mesa Gabriela, elegante e funcional. Esta peça de mobiliário é o complemento perfeito para qualquer espaço, conforto estilo e utilidade em um só produto.",
+    "color": "branco",
+    "sku": "",
+    "specifications": "",
+    "category": "Living Room",
+    "img": "./src/assets/d1454d4e-4da2-4fb5-8fbc-6b5bf4bd6debmesagabrieladouradoebranco.webp"
+  },
+  {
+    "name": "Rack Jersey Off White e Noce 217 cm",
+    "slug": "",
+    "price": 1115.96,
+    "description": "A sofisticação da sua sala de estar está garantida com o Rack Jersey! Com charme de sobra pela estrutura, ele possui um design clássico em formato retangular, 3 gavetas e nichos - tudo isso coroado pelas cores noce e off white. Essas características juntas formam o combo ideal para que a decoração siga por diversos estilos: seja ela com cores sóbrias, monocromática ou combinações ousadas. Quer opção melhor para aprimorar seus momentos de lazer em frente à televisão?",
+    "color": "branco",
+    "sku": "",
+    "specifications": "",
+    "category": "Living Room",
+    "img": "./src/assets/Casa-D-Rack-Jersey-Off-White-e-Noce-217-cm-3190-610307-1-zoom.jpg"
+  },
+  {
     "name": "Guarda-Roupa Casal Ana 6 PT 4 GV Branco 240 cm",
     "slug": "",
     "price": 1271.53,
@@ -64,6 +86,28 @@
     "specifications": "",
     "category": "Bed Room",
     "img": "./src/assets/Mobly-Base-para-Cama-Box-Queen-Martin-Premium-com-BaC3BA-Suede-2845x158x19829-Bege-2228-146335-1-zoom.jpg"
+  },
+  {
+    "name": "Guarda-Roupa Casal Ana 6 PT 4 GV Preto 240 cm",
+    "slug": "",
+    "price": 1407.53,
+    "description": "Item necessário para o bom funcionamento do quarto, o Guarda-Roupa Ana é o móvel ideal para que a arrumação do ambiente fique em dia. Equipado com 6 portas e 6 gavetas, ele tem compartimentos para vestuário, calçados, acessórios, cosméticos e até caixas organizadoras - tudo para garantir que peças fundamentais à sua rotina estejam sempre à mão. De quebra, o visual robusto com coloração tradicional a esse tipo de mobiliário oferece sofisticação e bom gosto para a decoração do seu espaço. Só benefícios para um lar incrível como o seu ;)",
+    "color": "preto",
+    "sku": "",
+    "specifications": "",
+    "category": "Bed Room",
+    "img": "./src/assets/Mobly-Guarda-Roupa-Casal--Ana-6-PT-4-GV-Preto-240-cm-6955-079877-1-zoom.jpg"
+  },
+  {
+    "name": "Beliche Montessoriano Ema I Grafite",
+    "slug": "",
+    "price": 771.23,
+    "description": "Nenhuma rotina começa bem sem uma noite de sono revigorante que relaxe todas as tensões do dia anterior, portanto uma cama bem estruturada é essencial. O Beliche Ema é perfeito para ajudar a iniciar as manhãs com aquele gás extra, enquanto o cômodo ganha um toque de design e beleza graças à essa peça que harmoniza muito bem com variados estilos de decoração - a combinação com os outros móveis do quarto fica por conta do seu bom gosto e criatividade. Ah, ele ainda é ótimo tanto para quem divide o dormitório quanto para quem costuma receber visitas em casa. Daí é só comprar bons colchões para acompanhá-lo e aproveitar o cantinho mega aconchegante que você vai criar ;)",
+    "color": "grafite",
+    "sku": "",
+    "specifications": "",
+    "category": "Bed Room",
+    "img": "./src/assets/Mobly-Beliche-Montessoriano-Ema-I-Grafite-5638-632847-1-zoom.jpg"
   },
   {
     "name": "Conjunto com 2 Cadeiras Bock Azul",
@@ -99,6 +143,28 @@
     "img": "./src/assets/Movelbento-Cristaleira-RetrC3B4-2-PT-2-GV-Branca-Gelo-2981-306265-1-zoom.jpg"
   },
   {
+    "name": "Buffet Aparador Retrô Clássico 4 Portas Off White - MoveisAqui",
+    "slug": "",
+    "price": 424.99,
+    "description": "",
+    "color": "branco",
+    "sku": "",
+    "specifications": "",
+    "category": "Dining Room",
+    "img": "./src/assets/MoveisAqui-Buffet-Aparador-RetrC3B4-ClC3A1ssico-4-Portas-Off-White---MoveisAqui-6189-961028-1-zoom.jpg"
+  },
+  {
+    "name": "Conjunto com 2 Cadeiras Tulipa Eiffel Marrom Whisky",
+    "slug": "",
+    "price": 463.48,
+    "description": "Donas de um design surpreendente, as peças do Conjunto com 2 Cadeiras Tulipa Eiffel prometem dar o toque de elegância que faltava em sua casa. As conchas na cor marrom whisky possuem diversos detalhes legais como o formato e a costura, já os pés alongados são charmosos e modernos. Ótima combinação, não é? E você pode adaptá-las a cômodos diferentes, seja para acompanhar outros móveis ou para serem belos itens decorativos.",
+    "color": "marrom",
+    "sku": "",
+    "specifications": "",
+    "category": "Dining Room",
+    "img": "./src/assets/Keva-Conjunto-com-2-Cadeiras-Tulipa-Eiffel-Marrom-Whisky-5651-449855-1-zoom.jpg"
+  },
+  {
     "name": "Cadeira de Escritório Diretor Giratória Oslo Preta",
     "slug": "",
     "price": 356.98,
@@ -130,5 +196,27 @@
     "specifications": "",
     "category": "Office",
     "img": "./src/assets/Pradel-Estante-Dijon-2-PT-2-GV-FreijC3B3-e-Preta-216-cm-4726-389087-1-zoom.jpg"
+  },
+  {
+    "name": "Mesa para Computador Gamer Madesa 9409 - Preto",
+    "slug": "",
+    "price": 265.23,
+    "description": "Quem adora jogar, sabe que não há nada melhor do que investir no set up ideal para dar um upgrade na sua experiência de jogo. A Mesa Gamer Madesa Preta proporciona muito conforto, além de possuir um visual super moderno e ter espaço de sobra! Perfeita para jogar no computador ou no videogame, seu tampo reforçado tem lugar para tudo: monitor, teclado, mouse, caixa de som e o que mais vdê precisar. Com as prateleiras laterais, você também consegue organizar os seus jogos e controles, além de ter um lugar adequado para colocar o CPU ou o console. Para quem trabalha em home office, a Mesa Gamer é um móvel versátil e pode ser utilizado também como escrivaninha ou estação de trabalho. Seu acabamento preto é feito em pintura poliéster ecológica com 7 camadas de proteção, garantindo muito mais resistência e durabilidade ao produto.",
+    "color": "preto",
+    "sku": "",
+    "specifications": "",
+    "category": "Office",
+    "img": "./src/assets/Madesa-Mesa-para-Computador-Gamer-Madesa-9409---Preto-3549-926077-1-zoom.jpg"
+  },
+  {
+    "name": "Cadeira Gamer Olympians Hades Preta e Vermelha",
+    "slug": "",
+    "price": 926.98,
+    "description": "Os E-Sports conquistaram um lugar superimportante na indústria do entretenimento, por isso jogar virou coisa séria. Se você curte passar umas horas na frente do computador ou console upando aquele game da vez, conheça a sua nova companheira perfeita: a Cadeira Olympians Hades! Inspirada na força e grandiosidade do ser mitológico Hades, ela é feita para levar mais comodidade às suas quests, contando com enchimento em espuma, camada viscoelástica e revestimento sintético - você pode jogar, estudar ou até mesmo trabalhar por horas sempre com o aconchego ideal. Cheia de funcionalidades, ela evita a sobrecarga do corpo, pois possui ajuste de altura com pistão a gás, almofadas removíveis para apoiar pescoço e lombar, e encosto reclinável, assim, fica fácil achar a melhor posição para as gameplays ou relaxar entre as partidas. Já as cores preto e vermelho vão dar aquele visual de arena para o seu espaço: estiloso e moderno. Agora, seu dia a dia vai ficar pronto de verdade para acompanhar qualquer atividade importante!",
+    "color": "preta e vermelha",
+    "sku": "",
+    "specifications": "",
+    "category": "Office",
+    "img": "./src/assets/LEX-Cadeira-Gamer-Olympians-Hades-Preta-e-Vermelha-6859-605188-1-zoom.jpg"
   }
 ]
