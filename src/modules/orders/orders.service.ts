@@ -40,9 +40,10 @@ export class OrdersService {
       return { ...newOrder, total, orderItems };
     }
 
-    orderItems.forEach(async (_, index) => {
+    orderItems.forEach(async (item, index) => {
       await this.orderItemsService.updateStock(
         createOrderItemsDto.orderItems[index].product.id,
+        item.quantity,
       );
     });
 

@@ -34,14 +34,14 @@ export class OrderItemsPrismaRepository implements OrderItemsRepository {
     return plainToInstance(OrderItem, newOrderItems);
   }
 
-  async updateStock(productId: string): Promise<void> {
+  async updateStock(productId: string, unitsSold: number): Promise<void> {
     const stock = await this.prisma.stock.findUnique({
       where: {
         productId,
       },
     });
 
-    const quantity = stock.quantity - 1;
+    const quantity = stock.quantity - unitsSold;
     await this.prisma.stock.update({
       where: { id: stock.id },
       data: {
