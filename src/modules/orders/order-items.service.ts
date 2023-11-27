@@ -31,4 +31,8 @@ export class OrderItemsService {
 
     return orderItems;
   }
+
+  async updateStock(productId: string, unitsSold: number) {
+    await this.orderItemsRepository.updateStock(productId, unitsSold);
+  }
 }
