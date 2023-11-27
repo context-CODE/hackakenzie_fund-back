@@ -14,7 +14,7 @@ model Category {
   id      String    @id @default(uuid())
   name    String    @unique @db.VarChar(20)
   slug    String    @db.Text
-  Product Product[]
+  product Product[]
 
   @@map("categories")
 }
@@ -27,7 +27,7 @@ model User {
   cpf               String    @unique @db.VarChar(11)
   phone             String    @unique @db.VarChar(11)
   birthday          String
-  type              Type      @default(CLIENT)
+  type              Type      @default(client)
   resetToken        String?
   isEmailVerified   Boolean   @default(false)
   confirmationToken String?
@@ -37,13 +37,14 @@ model User {
   address           Address[]
   cart              Cart?
   orders            Order[]
+  reviews           Reviews[]
 
   @@map("users")
 }
 
 enum Type {
-  SELLER
-  CLIENT
+  admin
+  client
 }
 
 model Image {
@@ -52,7 +53,7 @@ model Image {
   isCover      Boolean @default(false)
   path         String  @db.Text
   cloudinaryId String  @unique @db.VarChar(16)
-  Product      Product @relation(fields: [productId], references: [id])
+  product      Product @relation(fields: [productId], references: [id])
   productId    String
 
   @@map("images")
@@ -114,6 +115,7 @@ model Product {
   stock          Stock?
   cartItems      CartItem[]
   orderItems     OrderItem[]
+  reviews        Reviews[]
 
   @@map("products")
 }
@@ -203,4 +205,24 @@ model Payment {
   orderId   String        @unique
 
   @@map("payments")
+}
+
+model Reviews {
+  id          String   @id @default(uuid())
+  rating      Int
+  title       String   @db.VarChar(20)
+  description String
+  likes       Int      @default(0)
+  createdAt   DateTime @default(now())
+  status      Status   @default(analyzing)
+  user        User     @relation(fields: [userId], references: [id])
+  product     Product  @relation(fields: [productId], references: [id])
+  userId      String
+  productId   String
+}
+
+enum Status {
+  analyzing
+  approved
+  rejected
 }
