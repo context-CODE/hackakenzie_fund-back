@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
-import { plainToInstance, plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { Stock } from '../../entities/stock.entity';
 import { PrismaService } from 'src/database/prisma.service';
 import { StockRepository } from '../stock.repository';
@@ -15,7 +14,7 @@ export class StockPrismaRepository implements StockRepository {
       where: { id },
     });
 
-    return plainToClass(Stock, stock);
+    return plainToInstance(Stock, stock);
   }
 
   async update(data: UpdateStockDto, id: string): Promise<Stock> {

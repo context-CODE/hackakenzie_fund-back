@@ -11,6 +11,8 @@ import { DEFAULT_PAGINATION_SIZE } from 'src/common/util/common.constants';
 export class OrdersPrismaRepository implements OrdersRepository {
   constructor(private prisma: PrismaService) {}
   async create(customerId: string, deliveryId: string): Promise<Order> {
+    const randomTurn = Math.floor(Math.random() * 1000) + 1;
+
     const newOrder = await this.prisma.order.create({
       data: {
         customer: {
@@ -23,9 +25,16 @@ export class OrdersPrismaRepository implements OrdersRepository {
             id: deliveryId,
           },
         },
+        payment: {
+          create: {
+            status: randomTurn % 2 == 0 ? 'approved' : 'rejected',
+            paidAt: new Date(),
+          },
+        },
       },
       include: {
         deliverTo: true,
+        payment: true,
       },
     });
 
@@ -42,14 +51,14 @@ export class OrdersPrismaRepository implements OrdersRepository {
     if (customerId) {
       orders = await this.prisma.order.findMany({
         where: { customerId },
-        include: { customer: true, deliverTo: true },
+        include: { customer: true, deliverTo: true, payment: true },
         skip: offset,
         take: limit ?? DEFAULT_PAGINATION_SIZE.ORDERS,
       });
     }
 
     orders = await this.prisma.order.findMany({
-      include: { customer: true, deliverTo: true },
+      include: { customer: true, deliverTo: true, payment: true },
       skip: offset,
       take: limit ?? DEFAULT_PAGINATION_SIZE.ORDERS,
     });
@@ -63,6 +72,7 @@ export class OrdersPrismaRepository implements OrdersRepository {
       include: {
         customer: true,
         deliverTo: true,
+        payment: true,
         orderItems: true,
       },
     });
@@ -81,6 +91,12 @@ export class OrdersPrismaRepository implements OrdersRepository {
     const order = await this.prisma.order.update({
       where: { id },
       data: { status: StatusOrder[status] },
+      include: {
+        customer: true,
+        deliverTo: true,
+        payment: true,
+        orderItems: true,
+      },
     });
 
     return plainToInstance(Order, order);

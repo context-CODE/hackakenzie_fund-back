@@ -3,6 +3,7 @@ import { StatusOrder } from '@prisma/client';
 import { OrderItem } from './order-item.entity';
 import { User } from 'src/modules/users/entities/user.entity';
 import { Shipment } from 'src/modules/shipments/entities/shipment.entity';
+import { Payment } from './payment.entity';
 
 export class Order {
   readonly id: string;
@@ -12,6 +13,7 @@ export class Order {
 
   readonly customer: User;
   readonly deliverTo: Shipment;
+  readonly payment?: Payment;
   readonly orderItems?: OrderItem[];
 
   readonly total: number;

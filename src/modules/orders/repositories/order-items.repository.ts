@@ -7,5 +7,5 @@ export abstract class OrderItemsRepository {
     orderId: string,
   ): Promise<OrderItem[]>;
 
-  abstract updateStock(productId: string): Promise<void>;
+  abstract updateStock(productId: string, unitsSold: number): Promise<void>;
 }

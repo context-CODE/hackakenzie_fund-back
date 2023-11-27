@@ -28,7 +28,9 @@ export class UsersService {
 
     const user = await this.userRepository.create(createUserDto);
 
-    return await this.sendConfirmationEmail(user.email, user.id);
+    const message = await this.sendConfirmationEmail(user.email, user.id);
+
+    return { message };
   }
 
   async findByEmail(email: string) {

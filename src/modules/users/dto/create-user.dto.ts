@@ -6,9 +6,9 @@ import {
   IsString,
   Length,
   MaxLength,
+  MinLength,
 } from 'class-validator';
 import { IsNotEmptyString } from 'src/common/decorators/isNoEmptyString.decorator';
-import { IsPassword } from 'src/common/decorators/isPassword.decorator';
 
 export class CreateUserDto {
   @IsString()
@@ -19,7 +19,8 @@ export class CreateUserDto {
   @MaxLength(70)
   email: string;
 
-  @IsPassword()
+  @IsNotEmptyString()
+  @MinLength(6)
   @Transform(({ value }) => hashSync(value, 10))
   password: string;
 
