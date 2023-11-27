@@ -22,6 +22,7 @@ import { MailServerModule } from './modules/mail-server/mail-server.module';
 import { StockModule } from './modules/stock/stock.module';
 import { CartsModule } from './modules/carts/carts.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { ReviewsModule } from './modules/reviews/reviews.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { OrdersModule } from './modules/orders/orders.module';
     StockModule,
     CartsModule,
     OrdersModule,
+    ReviewsModule,
   ],
   exports: [],
   controllers: [AppController],
@@ -49,7 +51,7 @@ export class AppModule implements NestModule {
     consumer
       .apply(UserOwnerMiddleware)
       .exclude({
-        path: 'user',
+        path: 'users',
         method: RequestMethod.POST,
       })
       .forRoutes(UsersController);
