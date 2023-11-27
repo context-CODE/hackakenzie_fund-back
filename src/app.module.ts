@@ -15,10 +15,13 @@ import { MailServerModule } from './modules/mail-server/mail-server.module';
 import { StockModule } from './modules/stock/stock.module';
 import { CartsModule } from './modules/carts/carts.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TasksModule } from './modules/tasks/tasks.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
     CommonModule,
     CategoriesModule,
     UsersModule,
@@ -32,6 +35,7 @@ import { OrdersModule } from './modules/orders/orders.module';
     StockModule,
     CartsModule,
     OrdersModule,
+    TasksModule,
   ],
   exports: [],
   controllers: [AppController],

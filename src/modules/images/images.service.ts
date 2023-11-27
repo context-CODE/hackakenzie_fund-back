@@ -86,22 +86,22 @@ export class ImagesService {
       }
 
       const promises = files.map(async (file, index) => {
-        const filename = file.originalname.split('.')[0];
+        // const filename = file.originalname.split('.')[0];
         const cloudinaryId = randomBytes(8).toString('hex');
         const isCoverValid = !!/true/.test(`${data[index].isCover}`);
 
-        const { secure_url } = await Promise.resolve(
-          this.cloudinaryService.uploadFile(
-            file,
-            cloudinaryId,
-            filename,
-            CLOUDINARY_FOLDERS.PRODUCTS,
-          ),
-        );
+        // const { secure_url } = await Promise.resolve(
+        //   this.cloudinaryService.uploadFile(
+        //     file,
+        //     cloudinaryId,
+        //     filename,
+        //     CLOUDINARY_FOLDERS.PRODUCTS,
+        //   ),
+        // );
 
         return {
           cloudinaryId,
-          path: secure_url,
+          path: 'secure_url',
           isCover: isCoverValid,
           title: data[index].title,
         };
