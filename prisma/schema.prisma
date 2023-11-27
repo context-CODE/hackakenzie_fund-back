@@ -27,7 +27,7 @@ model User {
   cpf               String    @unique @db.VarChar(11)
   phone             String    @unique @db.VarChar(11)
   birthday          String
-  type              Type      @default(CLIENT)
+  type              Type      @default(client)
   resetToken        String?
   isEmailVerified   Boolean   @default(false)
   confirmationToken String?
@@ -37,13 +37,14 @@ model User {
   address           Address[]
   cart              Cart?
   orders            Order[]
+  Reviews           Reviews[]
 
   @@map("users")
 }
 
 enum Type {
-  SELLER
-  CLIENT
+  seller
+  client
 }
 
 model Image {
@@ -114,6 +115,7 @@ model Product {
   stock          Stock?
   cartItems      CartItem[]
   orderItems     OrderItem[]
+  Reviews        Reviews[]
 
   @@map("products")
 }
@@ -203,4 +205,24 @@ model Payment {
   orderId   String        @unique
 
   @@map("payments")
+}
+
+model Reviews {
+  id          String   @id @default(uuid())
+  rating      Int
+  title       String   @db.VarChar(20)
+  description String
+  likes       Int      @default(0)
+  createdAt   DateTime @default(now())
+  status      Status   @default(analyzing)
+  user        User     @relation(fields: [userId], references: [id])
+  product     Product  @relation(fields: [productId], references: [id])
+  userId      String
+  productId   String
+}
+
+enum Status {
+  analyzing
+  approved
+  rejected
 }
