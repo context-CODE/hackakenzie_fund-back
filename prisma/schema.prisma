@@ -37,13 +37,13 @@ model User {
   address           Address[]
   cart              Cart?
   orders            Order[]
-  Reviews           Reviews[]
+  reviews           Reviews[]
 
   @@map("users")
 }
 
 enum Type {
-  seller
+  admin
   client
 }
 
@@ -115,7 +115,7 @@ model Product {
   stock          Stock?
   cartItems      CartItem[]
   orderItems     OrderItem[]
-  Reviews        Reviews[]
+  reviews        Reviews[]
 
   @@map("products")
 }
