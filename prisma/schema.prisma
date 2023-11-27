@@ -36,7 +36,7 @@ model User {
   deletedAt         DateTime?
   address           Address[]
   cart              Cart?
-  order             Order?
+  orders            Order[]
 
   @@map("users")
 }
