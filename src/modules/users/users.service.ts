@@ -3,6 +3,7 @@ import {
   Inject,
   Injectable,
   forwardRef,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -35,7 +36,11 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    return this.userRepository.findOne(id);
+    const findUser = await this.userRepository.findOne(id);
+
+    if (findUser === null) throw new NotFoundException('User not found');
+
+    return findUser;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
