@@ -35,6 +35,8 @@ export class UsersPrismaRepository implements UsersRepository {
         },
         include: {
           address: true,
+          cart: true,
+          orders: true,
         },
       });
 
