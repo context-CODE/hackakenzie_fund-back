@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateShipmentDto } from './dto/create-shipment.dto';
 import { UpdateShipmentDto } from './dto/update-shipment.dto';
-import { ShipmentsRepository } from './respository/shipments.repository';
+import { ShipmentsRepository } from './repository/shipments.repository';
 
 @Injectable()
 export class ShipmentsService {

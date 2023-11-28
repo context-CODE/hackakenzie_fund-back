@@ -56,7 +56,7 @@ export class OrdersService {
   ): Promise<Order[]> {
     const user = await this.usersService.findOne(customerId);
 
-    if (user.type == 'SELLER') {
+    if (user.type == 'admin') {
       return await this.ordersRepository.findAll(paginationDto);
     }
 

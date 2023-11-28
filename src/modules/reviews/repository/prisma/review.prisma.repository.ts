@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ReviewsRepository } from '../reviews.reposotory';
+import { ReviewsRepository } from '../reviews.repository';
 import { PrismaService } from 'src/database/prisma.service';
 import { Review } from '../../entities/review.entity';
 import { CreateReviewDto } from '../../dto/create-review.dto';
@@ -14,12 +14,12 @@ export class ReviewsPrismaRepository implements ReviewsRepository {
     const review = new Review();
     Object.assign(review, { ...data });
 
-    const newReview = await this.prisma.reviews.create({ data: { ...review } });
+    const newReview = await this.prisma.review.create({ data: { ...review } });
 
     return plainToInstance(Review, newReview);
   }
   async findReviewsByUser(userId: string): Promise<Review[]> {
-    const findReviewsByUser = await this.prisma.reviews.findMany({
+    const findReviewsByUser = await this.prisma.review.findMany({
       where: { userId },
     });
 
@@ -27,7 +27,7 @@ export class ReviewsPrismaRepository implements ReviewsRepository {
   }
   async update(data: UpdateReviewDto, id: string): Promise<Review> {
     try {
-      const findReviewsByUser = await this.prisma.reviews.update({
+      const findReviewsByUser = await this.prisma.review.update({
         where: {
           id,
         },

@@ -19,7 +19,7 @@ export class ImagesPrismaRepository implements ImagesRepository {
     const newImage = await this.prisma.image.create({
       data: {
         ...image,
-        productId,
+        product: { connect: { id: productId } },
       },
     });
 

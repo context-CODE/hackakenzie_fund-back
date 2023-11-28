@@ -4,8 +4,6 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { CommonModule } from './common/common.module';
 import { CategoriesModule } from './modules/categories/categories.module';
@@ -23,6 +21,7 @@ import { StockModule } from './modules/stock/stock.module';
 import { CartsModule } from './modules/carts/carts.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -42,9 +41,7 @@ import { ReviewsModule } from './modules/reviews/reviews.module';
     OrdersModule,
     ReviewsModule,
   ],
-  exports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [JwtService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
