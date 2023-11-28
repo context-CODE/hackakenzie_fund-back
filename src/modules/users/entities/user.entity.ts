@@ -1,4 +1,4 @@
-import { $Enums } from '@prisma/client';
+import { TypeUser } from '@prisma/client';
 import { Exclude } from 'class-transformer';
 import { randomUUID } from 'crypto';
 
@@ -16,7 +16,7 @@ export class User {
   birthday: string;
 
   @Exclude()
-  type: $Enums.Type;
+  type: TypeUser;
 
   @Exclude()
   resetToken: string;

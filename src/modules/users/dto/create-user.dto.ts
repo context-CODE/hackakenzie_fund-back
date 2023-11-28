@@ -1,13 +1,14 @@
-import { hashSync } from 'bcryptjs';
-import { Transform } from 'class-transformer';
 import {
   IsEmail,
-  IsOptional,
+  IsEnum,
   IsString,
   Length,
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { hashSync } from 'bcryptjs';
+import { TypeUser } from '@prisma/client';
+import { Transform } from 'class-transformer';
 import { IsNotEmptyString } from 'src/common/decorators/isNoEmptyString.decorator';
 
 export class CreateUserDto {
@@ -36,7 +37,6 @@ export class CreateUserDto {
   @Length(10, 10)
   birthday: string;
 
-  @IsOptional()
-  @IsString()
-  type: 'SELLER' | 'CLIENT';
+  @IsEnum(TypeUser)
+  type: TypeUser;
 }

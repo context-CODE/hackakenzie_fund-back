@@ -26,7 +26,7 @@ export class ShipmentPrismaRepository implements ShipmentsRepository {
 
     Object.assign(shipments, { ...createAddressDto, addressId });
 
-    const newShipment = await this.prisma.shipments.create({
+    const newShipment = await this.prisma.shipment.create({
       data: { ...shipments, addressId: address.id },
     });
 
@@ -40,7 +40,7 @@ export class ShipmentPrismaRepository implements ShipmentsRepository {
       throw new NotFoundException('shipment not found!');
     }
 
-    await this.prisma.shipments.delete({ where: { id: shipment.id } });
+    await this.prisma.shipment.delete({ where: { id: shipment.id } });
   }
 
   async update(
@@ -49,7 +49,7 @@ export class ShipmentPrismaRepository implements ShipmentsRepository {
   ): Promise<Shipment> {
     const shipment: Shipment = await this.findOne(shipmentId);
 
-    const newShipment = await this.prisma.shipments.update({
+    const newShipment = await this.prisma.shipment.update({
       where: { id: shipment.id },
       data: { ...updateShipmentsDto },
     });
@@ -59,20 +59,20 @@ export class ShipmentPrismaRepository implements ShipmentsRepository {
 
   async findAll(addressId?: string): Promise<Shipment[]> {
     if (addressId) {
-      const shipments = await this.prisma.shipments.findMany({
+      const shipments = await this.prisma.shipment.findMany({
         where: { addressId },
       });
 
       return plainToInstance(Shipment, shipments);
     }
 
-    const shipments = await this.prisma.shipments.findMany({});
+    const shipments = await this.prisma.shipment.findMany({});
 
     return plainToInstance(Shipment, shipments);
   }
 
   async findOne(shipmentId: string): Promise<Shipment> {
-    const shipment = await this.prisma.shipments.findUnique({
+    const shipment = await this.prisma.shipment.findUnique({
       where: { id: shipmentId },
     });
 

@@ -27,7 +27,7 @@ model User {
   cpf               String    @unique @db.VarChar(11)
   phone             String    @unique @db.VarChar(11)
   birthday          String
-  type              Type      @default(client)
+  type              TypeUser  @default(client)
   resetToken        String?
   isEmailVerified   Boolean   @default(false)
   confirmationToken String?
@@ -37,12 +37,12 @@ model User {
   address           Address[]
   cart              Cart?
   orders            Order[]
-  reviews           Reviews[]
+  reviews           Review[]
 
   @@map("users")
 }
 
-enum Type {
+enum TypeUser {
   admin
   client
 }
@@ -60,36 +60,36 @@ model Image {
 }
 
 model Address {
-  id          String      @id @default(uuid())
-  responsible String      @db.VarChar(90)
-  district    String      @db.VarChar(50)
-  zipCode     String      @db.Char(8)
-  street      String      @db.VarChar(50)
-  city        String      @db.VarChar(50)
-  state       String      @db.Char(2)
-  number      String      @default("s/n") @db.VarChar(5)
-  complement  String?     @db.VarChar(20)
-  reference   String?     @db.VarChar(30)
-  isDefault   Boolean     @default(false)
-  user        User        @relation(fields: [userId], references: [id])
+  id          String     @id @default(uuid())
+  responsible String     @db.VarChar(90)
+  district    String     @db.VarChar(50)
+  zipCode     String     @db.Char(8)
+  street      String     @db.VarChar(50)
+  city        String     @db.VarChar(50)
+  state       String     @db.Char(2)
+  number      String     @default("s/n") @db.VarChar(5)
+  complement  String?    @db.VarChar(20)
+  reference   String?    @db.VarChar(30)
+  isDefault   Boolean    @default(false)
+  user        User       @relation(fields: [userId], references: [id])
   userId      String
-  shipments   Shipments[]
+  shipments   Shipment[]
 
   @@map("addresses")
 }
 
-enum Role {
+enum Option {
   standard
   fast
 }
 
-model Shipments {
+model Shipment {
   id             String    @id @default(uuid())
   fee            Float     @db.DoublePrecision
   trackCode      String?   @db.Text
   shippedAt      DateTime?
   deliveredUntil DateTime
-  option         Role      @default(standard)
+  option         Option    @default(standard)
   address        Address   @relation(fields: [addressId], references: [id])
   addressId      String
   order          Order?
@@ -115,7 +115,7 @@ model Product {
   stock          Stock?
   cartItems      CartItem[]
   orderItems     OrderItem[]
-  reviews        Reviews[]
+  reviews        Review[]
 
   @@map("products")
 }
@@ -131,12 +131,11 @@ model Stock {
 }
 
 model Cart {
-  id         String @id @default(uuid())
-  customer   User   @relation(fields: [customerId], references: [id])
-  customerId String @unique
-  total      Float  @default(0) @db.DoublePrecision
-
-  cartItems CartItem[]
+  id         String     @id @default(uuid())
+  customer   User       @relation(fields: [customerId], references: [id])
+  customerId String     @unique
+  total      Float      @default(0) @db.DoublePrecision
+  cartItems  CartItem[]
 
   @@map("carts")
 }
@@ -167,7 +166,7 @@ model Order {
   orderedAt  DateTime    @default(now())
   customer   User        @relation(fields: [customerId], references: [id])
   customerId String      @unique
-  deliverTo  Shipments   @relation(fields: [deliveryId], references: [id])
+  deliverTo  Shipment    @relation(fields: [deliveryId], references: [id])
   deliveryId String      @unique
   total      Float       @default(0) @db.DoublePrecision
 
@@ -207,7 +206,7 @@ model Payment {
   @@map("payments")
 }
 
-model Reviews {
+model Review {
   id          String   @id @default(uuid())
   rating      Int
   title       String   @db.VarChar(20)
@@ -219,6 +218,8 @@ model Reviews {
   product     Product  @relation(fields: [productId], references: [id])
   userId      String
   productId   String
+
+  @@map("reviews")
 }
 
 enum Status {
