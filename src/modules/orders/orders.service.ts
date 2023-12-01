@@ -15,39 +15,25 @@ export class OrdersService {
     private readonly orderItemsService: OrderItemsService,
   ) {}
   async create(customerId: string, data: CreateOrderDto): Promise<Order> {
-    const { deliverTo, ...createOrderItemsDto } = data;
+    const orderItemsWithPrice =
+      await this.orderItemsService.createOrderItemsWithPrice(data.orderItems);
 
     const newOrder = await this.ordersRepository.create(
       customerId,
-      deliverTo.id,
+      data.deliverTo,
+      orderItemsWithPrice,
     );
-
-    const orderItems = await this.orderItemsService.createMany(
-      createOrderItemsDto.orderItems,
-      newOrder.id,
-    );
-
-    const total =
-      orderItems.reduce((acc, current) => acc + current.subTotal, 0) +
-      newOrder.deliverTo.fee;
-
-    await this.ordersRepository.updateTotal(total, newOrder.id);
 
     if (
       newOrder.payment.status == 'rejected' ||
       newOrder.payment.status == 'pending'
     ) {
-      return { ...newOrder, total, orderItems };
+      return newOrder;
     }
 
-    orderItems.forEach(async (item, index) => {
-      await this.orderItemsService.updateStock(
-        createOrderItemsDto.orderItems[index].product.id,
-        item.quantity,
-      );
-    });
+    await this.ordersRepository.updateStock(orderItemsWithPrice);
 
-    return { ...newOrder, total, orderItems };
+    return newOrder;
   }
 
   async findAll(
@@ -68,8 +54,8 @@ export class OrdersService {
   }
 
   async update(id: string, { status }: UpdateOrderDto): Promise<Order> {
-    const order = await this.findOne(id);
+    await this.findOne(id);
 
-    return await this.ordersRepository.updateStatus(status, order.id);
+    return await this.ordersRepository.updateStatus(status, id);
   }
 }

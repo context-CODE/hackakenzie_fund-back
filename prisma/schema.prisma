@@ -121,11 +121,12 @@ model Product {
 }
 
 model Stock {
-  id        String  @id @default(uuid())
-  quantity  Int
-  minimum   Int     @default(1)
-  product   Product @relation(fields: [productId], references: [id])
-  productId String  @unique
+  id          String  @id @default(uuid())
+  quantity    Int
+  minimum     Int     @default(1)
+  isAvailable Boolean @default(true)
+  product     Product @relation(fields: [productId], references: [id])
+  productId   String  @unique
 
   @@map("stock")
 }
@@ -165,7 +166,7 @@ model Order {
   status     StatusOrder @default(confirmed)
   orderedAt  DateTime    @default(now())
   customer   User        @relation(fields: [customerId], references: [id])
-  customerId String      @unique
+  customerId String
   deliverTo  Shipment    @relation(fields: [deliveryId], references: [id])
   deliveryId String      @unique
   total      Float       @default(0) @db.DoublePrecision

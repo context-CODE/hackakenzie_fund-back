@@ -10,5 +10,13 @@ export interface IMailProps {
     addText?: string;
     c2a_link?: string;
     c2a_button?: string;
+    products?: IProductsMail[];
   };
+}
+
+export interface IProductsMail {
+  id: string;
+  name: string;
+  quantity: number;
+  minimum: number;
 }

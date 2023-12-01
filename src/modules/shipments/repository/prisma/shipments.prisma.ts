@@ -1,5 +1,5 @@
 import { PrismaService } from 'src/database/prisma.service';
-import { CreateShipmentDto } from '../../dto/create-shipment.dto';
+// import { CreateShipmentDto } from '../../dto/create-shipment.dto';
 import { UpdateShipmentDto } from '../../dto/update-shipment.dto';
 import { Shipment } from '../../entities/shipment.entity';
 import { ShipmentsRepository } from '../shipments.repository';
@@ -10,28 +10,29 @@ import { plainToInstance } from 'class-transformer';
 export class ShipmentPrismaRepository implements ShipmentsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(
-    addressId: string,
-    createAddressDto: CreateShipmentDto,
-  ): Promise<Shipment> {
-    const shipments = new Shipment();
+  // async create(
+  //   addressId: string,
+  //   createAddressDto: CreateShipmentDto,
+  // ): Promise<Shipment> {
+  //   const shipments = new Shipment();
 
-    const address = await this.prisma.address.findUnique({
-      where: { id: addressId },
-    });
+  //   Object.assign(shipments, {
+  //     ...createAddressDto,
+  //   });
 
-    if (!address) {
-      throw new NotFoundException('address not found!');
-    }
+  //   const newShipment = await this.prisma.shipment.create({
+  //     data: {
+  //       ...shipments,
+  //       address: {
+  //         connect: {
+  //           id: addressId,
+  //         },
+  //       },
+  //     },
+  //   });
 
-    Object.assign(shipments, { ...createAddressDto, addressId });
-
-    const newShipment = await this.prisma.shipment.create({
-      data: { ...shipments, addressId: address.id },
-    });
-
-    return plainToInstance(Shipment, newShipment);
-  }
+  //   return plainToInstance(Shipment, newShipment);
+  // }
 
   async delete(shipmentId: string): Promise<void> {
     const shipment = await this.findOne(shipmentId);

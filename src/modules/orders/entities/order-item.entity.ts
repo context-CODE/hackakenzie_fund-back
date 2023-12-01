@@ -1,5 +1,4 @@
 import { randomUUID } from 'crypto';
-import { Order } from './order.entity';
 import { Product } from 'src/modules/products/entities/product.entity';
 
 export class OrderItem {
@@ -7,11 +6,9 @@ export class OrderItem {
 
   price: number;
   quantity: number;
+  subTotal: number;
 
-  readonly subTotal: number;
-
-  readonly order: Order;
-  readonly product: Product;
+  readonly product?: Product;
 
   constructor() {
     this.id = randomUUID();

@@ -1,12 +1,12 @@
-import { IdDto } from 'src/common/dto/id.dto';
-import { IsEntity } from 'src/common/decorators/isEntity.decorator';
-import { ArrayNotEmpty, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ArrayNotEmpty, ValidateNested } from 'class-validator';
 import { CreateOrderItemDto } from './create-order-item.dto';
+import { CreateShipmentDto } from 'src/modules/shipments/dto/create-shipment.dto';
 
 export class CreateOrderDto {
-  @IsEntity()
-  deliverTo: IdDto;
+  @ValidateNested()
+  @Type(() => CreateShipmentDto)
+  deliverTo: CreateShipmentDto;
 
   @ArrayNotEmpty()
   @ValidateNested()

@@ -9,9 +9,10 @@ import { OrdersPrismaRepository } from './repositories/prisma/orders-prisma.repo
 import { OrderItemsRepository } from './repositories/order-items.repository';
 import { OrderItemsPrismaRepository } from './repositories/prisma/order-items-prisma.repository';
 import { UsersModule } from '../users/users.module';
+import { MailServerModule } from '../mail-server/mail-server.module';
 
 @Module({
-  imports: [ProductsModule, UsersModule],
+  imports: [ProductsModule, UsersModule, MailServerModule],
   exports: [OrdersService],
   controllers: [OrdersController],
   providers: [

@@ -26,11 +26,11 @@ export class UsersService {
 
     if (findUser) throw new ConflictException('Email already exists');
 
-    const user = await this.userRepository.create(createUserDto);
+    await this.userRepository.create(createUserDto);
 
-    const message = await this.sendConfirmationEmail(user.email, user.id);
+    //const user =  const message = await this.sendConfirmationEmail(user.email, user.id);
 
-    return { message };
+    return { message: 'User registered with success' };
   }
 
   async findByEmail(email: string) {

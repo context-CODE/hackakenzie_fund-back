@@ -9,30 +9,28 @@ export class OrderItemsService {
     private orderItemsRepository: OrderItemsRepository,
     private readonly productsService: ProductsService,
   ) {}
-  async createMany(data: CreateOrderItemDto[], orderId: string) {
+
+  async createOrderItemsWithPrice(data: CreateOrderItemDto[]) {
     const promises = data.map(async (item) => {
       if (!item.price) {
         const product = await this.productsService.findOne(item.product.id);
 
         return {
-          ...item,
           price: product.price,
+          quantity: item.quantity,
+          subTotal: +(item.quantity * product.price).toFixed(2),
+          productId: product.id,
         };
       }
 
-      return item;
+      return {
+        price: item.price,
+        quantity: item.quantity,
+        subTotal: +(item.quantity * item.price).toFixed(2),
+        productId: item.product.id,
+      };
     });
 
-    const products = await Promise.all(promises);
-    const orderItems = await this.orderItemsRepository.create(
-      products,
-      orderId,
-    );
-
-    return orderItems;
-  }
-
-  async updateStock(productId: string, unitsSold: number) {
-    await this.orderItemsRepository.updateStock(productId, unitsSold);
+    return await Promise.all(promises);
   }
 }
