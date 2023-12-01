@@ -31,9 +31,9 @@ export class AuthService {
   async login(email: string) {
     const user = await this.userService.findByEmail(email);
 
-    // if (!user.isEmailVerified) {
-    //   await this.userService.sendConfirmationEmail(user.email, user.id);
-    // }
+    if (!user.isEmailVerified) {
+      await this.userService.sendConfirmationEmail(user.email, user.id);
+    }
 
     return { token: this.jwtService.sign({ email }, { subject: user.id }) };
   }

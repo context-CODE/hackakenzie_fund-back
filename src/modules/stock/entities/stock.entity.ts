@@ -12,7 +12,5 @@ export class Stock {
 
   constructor() {
     this.id = randomUUID();
-
-    // this.isAvailable = this.quantity >= this.minimum;
   }
 }

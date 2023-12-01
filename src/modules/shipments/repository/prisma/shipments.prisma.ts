@@ -1,38 +1,13 @@
-import { PrismaService } from 'src/database/prisma.service';
-// import { CreateShipmentDto } from '../../dto/create-shipment.dto';
-import { UpdateShipmentDto } from '../../dto/update-shipment.dto';
+import { plainToInstance } from 'class-transformer';
 import { Shipment } from '../../entities/shipment.entity';
+import { PrismaService } from 'src/database/prisma.service';
 import { ShipmentsRepository } from '../shipments.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { plainToInstance } from 'class-transformer';
+import { UpdateShipmentDto } from '../../dto/update-shipment.dto';
 
 @Injectable()
 export class ShipmentPrismaRepository implements ShipmentsRepository {
   constructor(private readonly prisma: PrismaService) {}
-
-  // async create(
-  //   addressId: string,
-  //   createAddressDto: CreateShipmentDto,
-  // ): Promise<Shipment> {
-  //   const shipments = new Shipment();
-
-  //   Object.assign(shipments, {
-  //     ...createAddressDto,
-  //   });
-
-  //   const newShipment = await this.prisma.shipment.create({
-  //     data: {
-  //       ...shipments,
-  //       address: {
-  //         connect: {
-  //           id: addressId,
-  //         },
-  //       },
-  //     },
-  //   });
-
-  //   return plainToInstance(Shipment, newShipment);
-  // }
 
   async delete(shipmentId: string): Promise<void> {
     const shipment = await this.findOne(shipmentId);

@@ -25,7 +25,7 @@ export class OrdersPrismaRepository implements OrdersRepository {
     const total =
       orderItems.reduce((acc, current) => acc + current.subTotal, 0) +
       deliveryTo.fee;
-    // const randomTurn = Math.floor(Math.random() * 1000) + 1;
+    const randomTurn = Math.floor(Math.random() * 1000) + 1;
 
     const newOrder = await this.prisma.order.create({
       data: {
@@ -52,7 +52,7 @@ export class OrdersPrismaRepository implements OrdersRepository {
         },
         payment: {
           create: {
-            status: 'approved',
+            status: randomTurn % 2 == 0 ? 'approved' : 'rejected',
             paidAt: new Date(),
           },
         },
@@ -192,7 +192,6 @@ export class OrdersPrismaRepository implements OrdersRepository {
         email: true,
       },
     });
-    console.log(products);
 
     const emails = admins.map((admin) => admin.email);
 
@@ -204,9 +203,7 @@ export class OrdersPrismaRepository implements OrdersRepository {
         emails,
       );
 
-      const message = await this.mailServerService.sendEmail(template);
-
-      console.log('minProducts: ', message);
+      await this.mailServerService.sendEmail(template);
     }
 
     const outProducts = products.filter((pd) => pd.quantity < pd.minimum);
@@ -217,9 +214,7 @@ export class OrdersPrismaRepository implements OrdersRepository {
         emails,
       );
 
-      const message = await this.mailServerService.sendEmail(template);
-
-      console.log('outProducts: ', message);
+      await this.mailServerService.sendEmail(template);
     }
   }
 
