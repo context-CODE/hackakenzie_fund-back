@@ -1,6 +1,5 @@
 import {
   Get,
-  Post,
   Body,
   Patch,
   Param,
@@ -11,21 +10,11 @@ import {
 } from '@nestjs/common';
 import { ShipmentsService } from './shipments.service';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
-import { CreateShipmentDto } from './dto/create-shipment.dto';
 import { UpdateShipmentDto } from './dto/update-shipment.dto';
 
 @Controller('shipments')
 export class ShipmentsController {
   constructor(private readonly shipmentsService: ShipmentsService) {}
-
-  @Post(':addressId')
-  @UseGuards(JwtAuthGuard)
-  create(
-    @Param('addressId') addressId: string,
-    @Body() createShipmentDto: CreateShipmentDto,
-  ) {
-    return this.shipmentsService.create(addressId, createShipmentDto);
-  }
 
   @Get()
   @UseGuards(JwtAuthGuard)

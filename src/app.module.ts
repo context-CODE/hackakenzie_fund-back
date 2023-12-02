@@ -4,8 +4,6 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { CommonModule } from './common/common.module';
 import { CategoriesModule } from './modules/categories/categories.module';
@@ -22,6 +20,8 @@ import { MailServerModule } from './modules/mail-server/mail-server.module';
 import { StockModule } from './modules/stock/stock.module';
 import { CartsModule } from './modules/carts/carts.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { ReviewsModule } from './modules/reviews/reviews.module';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -39,17 +39,16 @@ import { OrdersModule } from './modules/orders/orders.module';
     StockModule,
     CartsModule,
     OrdersModule,
+    ReviewsModule,
   ],
-  exports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [JwtService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(UserOwnerMiddleware)
       .exclude({
-        path: 'user',
+        path: 'users',
         method: RequestMethod.POST,
       })
       .forRoutes(UsersController);

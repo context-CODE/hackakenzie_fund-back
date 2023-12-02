@@ -1,4 +1,6 @@
 import { randomUUID } from 'crypto';
+import { Option } from '@prisma/client';
+import { Address } from 'src/modules/addresses/entities/address.entity';
 
 export class Shipment {
   readonly id: string;
@@ -7,8 +9,9 @@ export class Shipment {
   trackCode?: string | null;
   shippedAt?: Date | null;
   deliveredUntil: Date;
-  option: 'standard' | 'fast';
-  addressId: string;
+  option: Option;
+
+  readonly address: Address;
 
   constructor() {
     this.id = randomUUID();

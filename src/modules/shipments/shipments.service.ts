@@ -1,28 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { CreateShipmentDto } from './dto/create-shipment.dto';
 import { UpdateShipmentDto } from './dto/update-shipment.dto';
-import { ShipmentsRepository } from './respository/shipments.repository';
+import { AddressService } from '../addresses/address.service';
+import { ShipmentsRepository } from './repository/shipments.repository';
 
 @Injectable()
 export class ShipmentsService {
-  constructor(readonly shipmentsRepository: ShipmentsRepository) {}
-  create(addressId: string, createShipmentDto: CreateShipmentDto) {
-    return this.shipmentsRepository.create(addressId, createShipmentDto);
+  constructor(
+    readonly shipmentsRepository: ShipmentsRepository,
+    private readonly addressService: AddressService,
+  ) {}
+
+  async findAll(addressId: string) {
+    return await this.shipmentsRepository.findAll(addressId);
   }
 
-  findAll(addressId: string) {
-    return this.shipmentsRepository.findAll(addressId);
+  async findOne(shipmentId: string) {
+    return await this.shipmentsRepository.findOne(shipmentId);
   }
 
-  findOne(shipmentId: string) {
-    return this.shipmentsRepository.findOne(shipmentId);
+  async update(shipmentId: string, updateShipmentDto: UpdateShipmentDto) {
+    return await this.shipmentsRepository.update(shipmentId, updateShipmentDto);
   }
 
-  update(shipmentId: string, updateShipmentDto: UpdateShipmentDto) {
-    return this.shipmentsRepository.update(shipmentId, updateShipmentDto);
-  }
-
-  remove(shipmentId: string) {
-    return this.shipmentsRepository.delete(shipmentId);
+  async remove(shipmentId: string) {
+    return await this.shipmentsRepository.delete(shipmentId);
   }
 }

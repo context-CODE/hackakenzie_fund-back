@@ -10,13 +10,12 @@ export class Order {
 
   orderedAt: Date;
   status: StatusOrder;
+  total: number;
 
   readonly customer: User;
   readonly deliverTo: Shipment;
-  readonly payment?: Payment;
-  readonly orderItems?: OrderItem[];
-
-  readonly total: number;
+  readonly payment: Payment;
+  readonly orderItems: OrderItem[];
 
   constructor() {
     this.id = randomUUID();

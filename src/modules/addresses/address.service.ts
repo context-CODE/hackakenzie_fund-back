@@ -16,13 +16,17 @@ export class AddressService {
     return this.addressRepository.create(userId, createAddressDto);
   }
 
+  async findOne(id: string) {
+    return await this.addressRepository.findOne(id);
+  }
+
   async update(id: string, updateAddressDto: UpdateAddressDto) {
-    await this.addressRepository.findOne(id);
+    await this.findOne(id);
     return this.addressRepository.update(id, updateAddressDto);
   }
 
   async remove(id: string) {
-    await this.addressRepository.findOne(id);
+    await this.findOne(id);
     return this.addressRepository.delete(id);
   }
 }
