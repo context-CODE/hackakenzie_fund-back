@@ -6,7 +6,6 @@ import { OrdersRepository } from '../orders.repository';
 import { PrismaService } from 'src/database/prisma.service';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { OrderItemDto } from '../../dto/create-order-item.dto';
-import { IProductsMail } from 'src/modules/mail-server/mail.interface';
 import { DEFAULT_PAGINATION_SIZE } from 'src/common/util/common.constants';
 import { MailServerService } from 'src/modules/mail-server/mail-server.service';
 import { CreateShipmentDto } from 'src/modules/shipments/dto/create-shipment.dto';
@@ -133,57 +132,66 @@ export class OrdersPrismaRepository implements OrdersRepository {
   }
 
   async updateStock(orderItems: OrderItemDto[]): Promise<void> {
-    const products = orderItems.map(async (item) => {
-      const stock = await this.prisma.stock.findUnique({
-        where: {
-          productId: item.productId,
-        },
-        include: {
-          product: true,
-        },
-      });
+    const lowProducts = [],
+      outProducts = [];
 
-      const quantity = stock.quantity - item.quantity;
-      if (quantity == 0) {
+    const products = await Promise.all(
+      orderItems.map(async (item) => {
+        const stock = await this.prisma.stock.findUnique({
+          where: {
+            productId: item.productId,
+          },
+          include: {
+            product: true,
+          },
+        });
+
+        const quantity = stock.quantity - item.quantity;
+        if (quantity == 0) {
+          await this.prisma.stock.update({
+            where: { id: stock.id },
+            data: {
+              quantity,
+              isAvailable: false,
+            },
+          });
+
+          return {
+            id: stock.product.id,
+            name: stock.product.name,
+            quantity,
+            minimum: stock.minimum,
+          };
+        }
+
         await this.prisma.stock.update({
           where: { id: stock.id },
           data: {
             quantity,
-            isAvailable: false,
           },
         });
 
-        return {
-          id: stock.product.id,
-          name: stock.product.name,
-          quantity,
-          minimum: stock.minimum,
-        };
+        if (quantity == stock.minimum) {
+          return {
+            id: stock.product.id,
+            name: stock.product.name,
+            quantity,
+            minimum: stock.minimum,
+          };
+        }
+      }),
+    );
+
+    products.forEach((pd) => {
+      if (pd.quantity == pd.minimum) {
+        lowProducts.push(pd);
       }
 
-      await this.prisma.stock.update({
-        where: { id: stock.id },
-        data: {
-          quantity,
-        },
-      });
-
-      if (quantity == stock.minimum) {
-        return {
-          id: stock.product.id,
-          name: stock.product.name,
-          quantity,
-          minimum: stock.minimum,
-        };
+      if (pd.quantity < pd.minimum) {
+        outProducts.push(pd);
       }
     });
 
-    const productsMail = await Promise.all(products);
-
-    await this.notifyStock(productsMail);
-  }
-
-  async notifyStock(products: IProductsMail[]): Promise<void> {
     const admins = await this.prisma.user.findMany({
       where: {
         type: 'admin',
@@ -192,10 +200,7 @@ export class OrdersPrismaRepository implements OrdersRepository {
         email: true,
       },
     });
-
     const emails = admins.map((admin) => admin.email);
-
-    const lowProducts = products.filter((pd) => pd.quantity == pd.minimum);
 
     if (lowProducts.length) {
       const template = this.mailServerService.notificationLowStockTemplate(
@@ -205,8 +210,6 @@ export class OrdersPrismaRepository implements OrdersRepository {
 
       await this.mailServerService.sendEmail(template);
     }
-
-    const outProducts = products.filter((pd) => pd.quantity < pd.minimum);
 
     if (outProducts.length) {
       const template = this.mailServerService.notificationOutStockTemplate(

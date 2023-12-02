@@ -1,14 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ProductsService } from '../products/products.service';
 import { CreateOrderItemDto } from './dto/create-order-item.dto';
-import { OrderItemsRepository } from './repositories/order-items.repository';
 
 @Injectable()
 export class OrderItemsService {
-  constructor(
-    private orderItemsRepository: OrderItemsRepository,
-    private readonly productsService: ProductsService,
-  ) {}
+  constructor(private readonly productsService: ProductsService) {}
 
   async createOrderItemsWithPrice(data: CreateOrderItemDto[]) {
     const promises = data.map(async (item) => {
